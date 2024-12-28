@@ -1,6 +1,7 @@
 import express from 'express';
 import { success } from '../../network/response.js';
 import passport from 'passport';
+import { checkRoles } from '../../middleware/auth.handler.js';
 
 import ProvinciaService from './service.js';
 const service = new ProvinciaService();
@@ -28,7 +29,7 @@ router.get('/:id', async (req, res, next) => {
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
-  // checkRoles('admin'),
+  checkRoles('admin'),
   async (req, res, next) => {
     try {
       await service.create(req.body);

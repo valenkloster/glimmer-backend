@@ -4,12 +4,6 @@ import routerApi from './network/routes.js';
 import errors from './network/errors.js';
 import cors from 'cors';
 import boom from '@hapi/boom';
-// import {
-//   logErrors,
-//   errorHandler,
-//   boomErrorHandler,
-//   ormErrorHandler,
-// } from "./middleware/error.handler.js";
 
 const app = express();
 
@@ -29,12 +23,6 @@ app.use(errors);
 app.use((req, res, next) => {
   next(boom.notFound('Route not found'));
 });
-
-// Error middleware
-// app.use(logErrors);
-// app.use(ormErrorHandler);
-// app.use(boomErrorHandler);
-// app.use(errorHandler);
 
 app.listen(config.port, () => {
   console.log('App listening on port ' + config.port + '!');
