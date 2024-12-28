@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
   try {
-    const estadoPedidos = await service.get();
-    success(req, res, estadoPedidos, 200);
+    const orderStatus = await service.get();
+    success(req, res, orderStatus, 200);
   } catch (error) {
     next(error);
   }
@@ -17,8 +17,8 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const estadoPedido = await service.getById(req.params.id);
-    success(req, res, estadoPedido, 200);
+    const orderStatus = await service.getById(req.params.id);
+    success(req, res, orderStatus, 200);
   } catch (error) {
     next(error);
   }
@@ -27,7 +27,7 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     await service.create(req.body);
-    success(req, res, 'Estado Pedido created', 201);
+    success(req, res, 'Order Status created', 201);
   } catch (error) {
     next(error);
   }
@@ -36,7 +36,7 @@ router.post('/', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   try {
     await service.delete(req.params.id);
-    success(req, res, 'Estado Pedido has been deleted', 200);
+    success(req, res, 'Order Status deleted', 200);
   } catch (error) {
     next(error);
   }

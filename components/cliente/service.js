@@ -23,33 +23,32 @@ class CustomerService {
       },
     };
 
-    // Se crea junto con el usuario
-    const newCliente = await models.Cliente.create(newData, {
+    const newCustomer = await models.Cliente.create(newData, {
       include: ['user'],
     });
-    delete newCliente.dataValues.user.dataValues.password;
-    return newCliente;
+    delete newCustomer.dataValues.user.dataValues.password;
+    return newCustomer;
   }
 
   async get() {
-    const clientes = await models.Cliente.findAll();
-    return clientes;
+    const customers = await models.Cliente.findAll();
+    return customers;
   }
 
   async getById(id) {
-    const cliente = await models.Cliente.findByPk(id, {
+    const customer = await models.Cliente.findByPk(id, {
       include: ['user'],
     });
-    if (!cliente) {
-      throw boom.notFound('product not found');
+    if (!customer) {
+      throw boom.notFound('Customer not found');
     }
-    return cliente;
+    return customer;
   }
 
   async update(id, changes) {
-    const clienteToUpdate = await models.Cliente.findByPk(id);
-    if (clienteToUpdate) {
-      await clienteToUpdate.update(changes);
+    const customerToUpdate = await models.Cliente.findByPk(id);
+    if (customerToUpdate) {
+      await customerToUpdate.update(changes);
     }
   }
 

@@ -6,21 +6,51 @@ class DireccionService {
   constructor() {}
 
   async create(data) {
-    const localidad = await models.Localidad.findByPk(data.id_localidad);
-    if (!localidad) {
-      throw boom.notFound('Localidad not found');
-    }
-    const nuevaDireccion = await models.Direccion.create(data);
-    return nuevaDireccion;
+    // Find or create country
+    const [country] = await models.Pais.findOrCreate({
+      where: { nombre: data.localidad.provincia.pais.nombre },
+      defaults: { nombre: data.localidad.provincia.pais.nombre },
+    });
+
+    // Find or create state
+    const [province] = await models.Provincia.findOrCreate({
+      where: {
+        nombre: data.localidad.provincia.nombre,
+        id_pais: country.id_pais,
+      },
+      defaults: {
+        nombre: data.localidad.provincia.nombre,
+        id_pais: country.id_pais,
+      },
+    });
+
+    // Find or create place
+    const [place] = await models.Localidad.findOrCreate({
+      where: {
+        nombre: data.localidad.nombre,
+        id_provincia: province.id_provincia,
+      },
+      defaults: {
+        nombre: data.localidad.nombre,
+        id_provincia: province.id_provincia,
+      },
+    });
+
+    // Address
+    const newAddress = await models.Direccion.create({
+      ...data,
+      id_localidad: place.id_localidad,
+    });
+    return newAddress;
   }
 
   async get() {
-    const direcciones = await models.Direccion.findAll();
-    return direcciones;
+    const address = await models.Direccion.findAll();
+    return address;
   }
 
   async getById(id) {
-    const direccion = await models.Direccion.findByPk(id, {
+    const address = await models.Direccion.findByPk(id, {
       include: [
         {
           association: 'localidad', // Relación de la localidad
@@ -33,21 +63,21 @@ class DireccionService {
         },
       ],
     });
-    if (!direccion) {
-      throw boom.notFound('Direccion not found');
+    if (!address) {
+      throw boom.notFound('Address not found');
     }
-    return direccion;
+    return address;
   }
 
   async update(id, changes) {
-    const direccion = await this.getById(id);
-    const updatedDireccion = await direccion.update(changes);
-    return updatedDireccion;
+    const address = await this.getById(id);
+    const updatedAddress = await address.update(changes);
+    return updatedAddress;
   }
 
   async delete(id) {
-    const direccion = await this.getById(id);
-    await direccion.destroy();
+    const address = await this.getById(id);
+    await address.destroy();
     return { rta: true };
   }
 }

@@ -6,27 +6,28 @@ class LocalidadService {
   constructor() {}
 
   async create(data) {
-    const nuevaLocalidad = await models.Localidad.create(data);
-    return nuevaLocalidad;
+    const place = await models.Localidad.create(data);
+    return place;
   }
 
   async get() {
-    const localidades = await models.Localidad.findAll();
-    return localidades;
+    const places = await models.Localidad.findAll();
+    return places;
   }
 
   async getById(id) {
-    const localidad = await models.Localidad.findByPk(id);
-    if (!localidad) {
-      throw boom.notFound('Localidad not found');
+    const place = await models.Localidad.findByPk(id, {
+      include: ['provincia'],
+    });
+    if (!place) {
+      throw boom.notFound('Place not found');
     }
-    return localidad;
+    return place;
   }
 
   async delete(id) {
-    const localidad = await this.getById(id);
-    await localidad.destroy();
-    return { rta: true };
+    const place = await this.getById(id);
+    await place.destroy();
   }
 }
 

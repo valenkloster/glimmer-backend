@@ -7,6 +7,7 @@ import direcciones from '../components/direccion/network.js';
 import estados_pedidos from '../components/estado_pedido/network.js';
 import user from '../components/user/network.js';
 import cliente from '../components/cliente/network.js';
+import auth from '../components/auth/network.js';
 
 function routerApi(app) {
   const router = express.Router();
@@ -18,7 +19,8 @@ function routerApi(app) {
   router.use('/direcciones', direcciones);
   router.use('/estados_pedidos', estados_pedidos);
   router.use('/user', user);
-  router.use('/cliente', cliente);
+  router.use('/clientes', cliente);
+  router.use('/auth', auth);
 }
 
 export default routerApi;

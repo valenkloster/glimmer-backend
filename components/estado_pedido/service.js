@@ -6,27 +6,26 @@ class EstadoPedidoService {
   constructor() {}
 
   async create(data) {
-    const nuevoEstadoPedido = await models.Estado_Pedido.create(data);
-    return nuevoEstadoPedido;
+    const newOrderStatus = await models.Estado_Pedido.create(data);
+    return newOrderStatus;
   }
 
   async get() {
-    const estadosPedidos = await models.Estado_Pedido.findAll();
-    return estadosPedidos;
+    const orderStatus = await models.Estado_Pedido.findAll();
+    return orderStatus;
   }
 
   async getById(id) {
-    const estadoPedido = await models.Estado_Pedido.findByPk(id);
-    if (!estadoPedido) {
-      throw boom.notFound('Estado Pedido not found');
+    const orderStatus = await models.Estado_Pedido.findByPk(id);
+    if (!orderStatus) {
+      throw boom.notFound('Order Status not found');
     }
-    return estadoPedido;
+    return orderStatus;
   }
 
   async delete(id) {
-    const estadoPedido = await this.getById(id);
-    await estadoPedido.destroy();
-    return { rta: true };
+    const orderStatus = await this.getById(id);
+    await orderStatus.destroy();
   }
 }
 

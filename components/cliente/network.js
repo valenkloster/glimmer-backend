@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
   try {
-    const clientes = await service.get();
-    success(req, res, clientes, 200);
+    const customers = await service.get();
+    success(req, res, customers, 200);
   } catch (error) {
     next(error);
   }
@@ -17,8 +17,8 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const cliente = await service.getById(req.params.id);
-    success(req, res, cliente, 200);
+    const customer = await service.getById(req.params.id);
+    success(req, res, customer, 200);
   } catch (error) {
     next(error); // middleware
   }
@@ -27,8 +27,8 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const body = req.body;
-    const newCliente = await service.create(body);
-    success(req, res, newCliente, 200);
+    const newCustomer = await service.create(body);
+    success(req, res, newCustomer, 200);
   } catch (error) {
     next(error);
   }
@@ -37,7 +37,7 @@ router.post('/', async (req, res, next) => {
 router.patch('/:id', async (req, res, next) => {
   try {
     await service.update(req.params.id, req.body);
-    success(req, res, `Client updated`, 200);
+    success(req, res, `Customer updated`, 200);
   } catch (error) {
     next(error); // middleware
   }
@@ -46,7 +46,7 @@ router.patch('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   try {
     await service.delete(req.params.id);
-    success(req, res, `Client deleted`, 200);
+    success(req, res, `Customer deleted`, 200);
   } catch (error) {
     next(error);
   }

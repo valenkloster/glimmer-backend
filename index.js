@@ -1,41 +1,33 @@
-import express from "express";
-import cors from "cors";
-import routerApi from "./network/routes.js";
+import express from 'express';
+import config from './config.js';
+import routerApi from './network/routes.js';
+import errors from './network/errors.js';
+import cors from 'cors';
+import boom from '@hapi/boom';
 // import {
 //   logErrors,
 //   errorHandler,
 //   boomErrorHandler,
 //   ormErrorHandler,
 // } from "./middleware/error.handler.js";
-import boom from "@hapi/boom";
-import config from "./config.js";
 
 const app = express();
+
+app.use(cors());
+
+import './utils/auth/index.js';
+
 app.use(express.json());
-
-// Corse
-const whitelist = ["http://localhost:5500", "https://myapp.com"];
-const options = {
-  origin: (origin, callback) => {
-    if (whitelist.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("no permitido"));
-    }
-  },
-};
-app.use(cors(options));
-
-// app.get("/", (req, res) => {
-//   res.send("Hola mi server en express");
-// });
 
 // Routes
 routerApi(app);
 
+// Error middleware
+app.use(errors);
+
 // Middleware for not founded routes
 app.use((req, res, next) => {
-  next(boom.notFound("Route not found"));
+  next(boom.notFound('Route not found'));
 });
 
 // Error middleware
@@ -45,5 +37,5 @@ app.use((req, res, next) => {
 // app.use(errorHandler);
 
 app.listen(config.port, () => {
-  console.log("App listening on port " + config.port + "!");
+  console.log('App listening on port ' + config.port + '!');
 });

@@ -6,27 +6,26 @@ class PaisService {
   constructor() {}
 
   async create(data) {
-    const nuevoPais = await models.Pais.create(data);
-    return nuevoPais;
+    const newCountry = await models.Pais.create(data);
+    return newCountry;
   }
 
   async get() {
-    const paises = await models.Pais.findAll();
-    return paises;
+    const countries = await models.Pais.findAll();
+    return countries;
   }
 
   async getById(id) {
-    const pais = await models.Pais.findByPk(id);
-    if (!pais) {
-      throw boom.notFound('Pais not found');
+    const country = await models.Pais.findByPk(id);
+    if (!country) {
+      throw boom.notFound('Country not found');
     }
-    return pais;
+    return country;
   }
 
   async delete(id) {
-    const pais = await this.getById(id);
-    await pais.destroy();
-    return { rta: true };
+    const country = await this.getById(id);
+    await country.destroy();
   }
 }
 

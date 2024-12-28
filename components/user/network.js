@@ -26,7 +26,6 @@ router.get('/:id', async (req, res, next) => {
 
 router.get('/email/:email', async (req, res, next) => {
   try {
-    console.log('Email recibido en la ruta:', req.params.email); // Verifica el valor aquí
     const user = await service.getByEmail(req.params.email);
     success(req, res, user, 200);
   } catch (error) {

@@ -1,5 +1,6 @@
 import express from 'express';
 import { success } from '../../network/response.js';
+import passport from 'passport';
 
 import PaisService from './service.js';
 const service = new PaisService();
@@ -8,8 +9,8 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
   try {
-    const paises = await service.get();
-    success(req, res, paises, 200);
+    const countries = await service.get();
+    success(req, res, countries, 200);
   } catch (error) {
     next(error);
   }
@@ -17,8 +18,8 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const pais = await service.getById(req.params.id);
-    success(req, res, pais, 200);
+    const country = await service.getById(req.params.id);
+    success(req, res, country, 200);
   } catch (error) {
     next(error);
   }
@@ -26,11 +27,12 @@ router.get('/:id', async (req, res, next) => {
 
 router.post(
   '/',
+  passport.authenticate('jwt', { session: false }),
   // checkRoles('admin'),
   async (req, res, next) => {
     try {
       await service.create(req.body);
-      success(req, res, 'Pais created', 201);
+      success(req, res, 'Country created', 201);
     } catch (error) {
       next(error);
     }
@@ -40,7 +42,7 @@ router.post(
 router.delete('/:id', async (req, res, next) => {
   try {
     await service.delete(req.params.id);
-    success(req, res, 'Pais has been deleted', 200);
+    success(req, res, 'Country deleted', 200);
   } catch (error) {
     next(error);
   }
