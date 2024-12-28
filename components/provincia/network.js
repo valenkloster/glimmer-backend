@@ -1,9 +1,10 @@
 import express from 'express';
 import { success } from '../../network/response.js';
+
 import ProvinciaService from './service.js';
+const service = new ProvinciaService();
 
 const router = express.Router();
-const service = new ProvinciaService();
 
 router.get('/', async (req, res, next) => {
   try {

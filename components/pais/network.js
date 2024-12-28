@@ -1,9 +1,10 @@
 import express from 'express';
 import { success } from '../../network/response.js';
+
 import PaisService from './service.js';
+const service = new PaisService();
 
 const router = express.Router();
-const service = new PaisService();
 
 router.get('/', async (req, res, next) => {
   try {

@@ -1,7 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 import { PROVINCIA_TABLE } from '../provincia/model.js';
 
-const LOCALIDAD_TABLE = 't_localidad';
+const LOCALIDAD_TABLE = 'Localidad';
 
 const LocalidadSchema = {
   id_localidad: {

@@ -1,9 +1,10 @@
 import express from 'express';
 import { success } from '../../network/response.js';
+
 import EstadoPedidoService from './service.js';
+const service = new EstadoPedidoService();
 
 const router = express.Router();
-const service = new EstadoPedidoService();
 
 router.get('/', async (req, res, next) => {
   try {

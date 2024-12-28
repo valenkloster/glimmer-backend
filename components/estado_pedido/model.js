@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 
-const ESTADO_PEDIDO_TABLE = 'estado_pedidos';
+const ESTADO_PEDIDO_TABLE = 'Estado_Pedidos';
 
 const EstadoPedidoSchema = {
   id_estado_pedido: {

@@ -1,15 +1,15 @@
 import express from 'express';
 import { success } from '../../network/response.js';
 
-import DireccionService from './service.js';
-const service = new DireccionService();
+import CustomerService from './service.js';
+const service = new CustomerService();
 
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
   try {
-    const direcciones = await service.get();
-    success(req, res, direcciones, 200);
+    const clientes = await service.get();
+    success(req, res, clientes, 200);
   } catch (error) {
     next(error);
   }
@@ -17,17 +17,18 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const direccion = await service.getById(req.params.id);
-    success(req, res, direccion, 200);
+    const cliente = await service.getById(req.params.id);
+    success(req, res, cliente, 200);
   } catch (error) {
-    next(error);
+    next(error); // middleware
   }
 });
 
 router.post('/', async (req, res, next) => {
   try {
-    await service.create(req.body);
-    success(req, res, 'Direccion created', 201);
+    const body = req.body;
+    const newCliente = await service.create(body);
+    success(req, res, newCliente, 200);
   } catch (error) {
     next(error);
   }
@@ -36,16 +37,16 @@ router.post('/', async (req, res, next) => {
 router.patch('/:id', async (req, res, next) => {
   try {
     await service.update(req.params.id, req.body);
-    success(req, res, 'Direccion updated', 200);
+    success(req, res, `Client updated`, 200);
   } catch (error) {
-    next(error);
+    next(error); // middleware
   }
 });
 
 router.delete('/:id', async (req, res, next) => {
   try {
     await service.delete(req.params.id);
-    success(req, res, 'Direccion has been deleted', 200);
+    success(req, res, `Client deleted`, 200);
   } catch (error) {
     next(error);
   }
