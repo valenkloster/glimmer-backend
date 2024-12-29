@@ -1,0 +1,75 @@
+import { Model, DataTypes } from 'sequelize';
+import { CATEGORIA_TABLE } from '../categoria/model.js';
+
+const PRODUCTO_TABLE = 'Producto';
+
+const ProductoSchema = {
+  id_producto: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  nombre: {
+    type: DataTypes.STRING(100),
+    allowNull: false,
+    validate: {
+      len: {
+        args: [1, 100],
+        msg: 'El nombre debe tener entre 1 y 100 caracteres',
+      },
+    },
+  },
+  marca: {
+    type: DataTypes.STRING(100),
+    allowNull: false,
+  },
+  descripcion: {
+    type: DataTypes.STRING(300),
+    allowNull: false,
+  },
+  precio: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,
+    validate: {
+      min: {
+        args: [0],
+        msg: 'El precio no puede ser negativo',
+      },
+    },
+  },
+  imagen: {
+    type: DataTypes.STRING(255),
+    allowNull: false,
+  },
+  id_categoria: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: CATEGORIA_TABLE,
+      key: 'id_categoria',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+  },
+};
+
+class Producto extends Model {
+  static associate(models) {
+    this.belongsTo(models.Categoria, {
+      as: 'categoria',
+      foreignKey: 'id_categoria',
+    });
+  }
+
+  static config(sequelize) {
+    return {
+      sequelize,
+      tableName: PRODUCTO_TABLE,
+      modelName: 'Producto',
+      timestamps: false,
+    };
+  }
+}
+
+export { PRODUCTO_TABLE, ProductoSchema, Producto };

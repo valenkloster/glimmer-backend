@@ -5,6 +5,8 @@ import { Direccion, DireccionSchema } from './direccion/model.js';
 import { Estado_Pedido, EstadoPedidoSchema } from './estado_pedido/model.js';
 import { User, UserSchema } from './user/model.js';
 import { Cliente, ClienteSchema } from './cliente/model.js';
+import { Categoria, CategoriaSchema } from './categoria/model.js';
+import { Producto, ProductoSchema } from './producto/model.js';
 
 // Inicializa todos los modelos
 const setupModels = (sequelize) => {
@@ -15,6 +17,8 @@ const setupModels = (sequelize) => {
   Estado_Pedido.init(EstadoPedidoSchema, Estado_Pedido.config(sequelize));
   User.init(UserSchema, User.config(sequelize));
   Cliente.init(ClienteSchema, Cliente.config(sequelize));
+  Categoria.init(CategoriaSchema, Categoria.config(sequelize));
+  Producto.init(ProductoSchema, Producto.config(sequelize));
 
   // Ejecuto la asociacion
   Pais.associate(sequelize.models);
@@ -23,6 +27,8 @@ const setupModels = (sequelize) => {
   Direccion.associate(sequelize.models);
   User.associate(sequelize.models);
   Cliente.associate(sequelize.models);
+  Categoria.associate(sequelize.models);
+  Producto.associate(sequelize.models);
 
   // Estado_Pedido.associate(sequelize.models);
 };

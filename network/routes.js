@@ -8,6 +8,7 @@ import estados_pedidos from '../components/estado_pedido/network.js';
 import user from '../components/user/network.js';
 import cliente from '../components/cliente/network.js';
 import auth from '../components/auth/network.js';
+import categoria from '../components/categoria/network.js';
 
 function routerApi(app) {
   const router = express.Router();
@@ -21,6 +22,7 @@ function routerApi(app) {
   router.use('/user', user);
   router.use('/clientes', cliente);
   router.use('/auth', auth);
+  router.use('/categorias', categoria);
 }
 
 export default routerApi;
