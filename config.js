@@ -10,6 +10,12 @@ const config = {
   dbName: process.env.DB_NAME,
   dbPort: process.env.DB_PORT,
   jwtSecret: process.env.JWT_SECRET,
+  mailerHost: process.env.MAILER_HOST,
+  mailerPort: process.env.MAILER_PORT,
+  mailerAddress: process.env.MAILER_ADDRESS,
+  mailerPass: process.env.MAILER_PASS,
+  jwtSecretRecovery: process.env.JWT_SECRET_RECOVERY,
+  clientDomain: process.env.CLIENT_DOMAIN,
 };
 
 export default config;
