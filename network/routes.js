@@ -9,6 +9,7 @@ import user from '../components/user/network.js';
 import cliente from '../components/cliente/network.js';
 import auth from '../components/auth/network.js';
 import categoria from '../components/categoria/network.js';
+import producto from '../components/producto/network.js';
 
 function routerApi(app) {
   const router = express.Router();
@@ -23,6 +24,7 @@ function routerApi(app) {
   router.use('/clientes', cliente);
   router.use('/auth', auth);
   router.use('/categorias', categoria);
+  router.use('/productos', producto);
 }
 
 export default routerApi;
