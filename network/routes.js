@@ -1,5 +1,4 @@
 import express from 'express';
-// import productsRouter from '../components/producto/network.js';
 import paises from '../components/pais/network.js';
 import provincias from '../components/provincia/network.js';
 import localidades from '../components/localidad/network.js';
@@ -10,11 +9,12 @@ import cliente from '../components/cliente/network.js';
 import auth from '../components/auth/network.js';
 import categoria from '../components/categoria/network.js';
 import producto from '../components/producto/network.js';
+import producto_tono from '../components/producto_tono/network.js';
+import producto_detalle from '../components/producto_detalle/network.js';
 
 function routerApi(app) {
   const router = express.Router();
   app.use('/api/v1', router);
-  // router.use('/products', productsRouter);
   router.use('/paises', paises);
   router.use('/provincias', provincias);
   router.use('/localidades', localidades);
@@ -25,6 +25,8 @@ function routerApi(app) {
   router.use('/auth', auth);
   router.use('/categorias', categoria);
   router.use('/productos', producto);
+  router.use('/producto_tonos', producto_tono);
+  router.use('/producto_detalles', producto_detalle);
 }
 
 export default routerApi;

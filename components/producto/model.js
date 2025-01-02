@@ -10,6 +10,14 @@ const ProductoSchema = {
     autoIncrement: true,
     primaryKey: true,
   },
+  codigo: {
+    type: DataTypes.STRING(50),
+    allowNull: false,
+    unique: true,
+    validate: {
+      notEmpty: true,
+    },
+  },
   nombre: {
     type: DataTypes.STRING(100),
     allowNull: false,
@@ -25,8 +33,14 @@ const ProductoSchema = {
     allowNull: false,
   },
   descripcion: {
-    type: DataTypes.STRING(300),
+    type: DataTypes.STRING(500),
     allowNull: false,
+    validate: {
+      len: {
+        args: [0, 500],
+        msg: 'La descripción debe tener hasta 500 caracteres',
+      },
+    },
   },
   precio: {
     type: DataTypes.DECIMAL(10, 2),
@@ -59,6 +73,10 @@ class Producto extends Model {
     this.belongsTo(models.Categoria, {
       as: 'categoria',
       foreignKey: 'id_categoria',
+    });
+    this.hasMany(models.ProductoDetalle, {
+      as: 'detalles',
+      foreignKey: 'id_producto',
     });
   }
 

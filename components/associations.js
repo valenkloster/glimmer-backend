@@ -7,6 +7,15 @@ import { User, UserSchema } from './user/model.js';
 import { Cliente, ClienteSchema } from './cliente/model.js';
 import { Categoria, CategoriaSchema } from './categoria/model.js';
 import { Producto, ProductoSchema } from './producto/model.js';
+import { ProductoTono, ProductoTonoSchema } from './producto_tono/model.js';
+import {
+  ProductoDetalle,
+  ProductoDetalleSchema,
+} from './producto_detalle/model.js';
+import {
+  ProductoDetalleTono,
+  ProductoDetalleTonoSchema,
+} from './producto_detalle_tono/model.js';
 
 // Inicializa todos los modelos
 const setupModels = (sequelize) => {
@@ -19,6 +28,15 @@ const setupModels = (sequelize) => {
   Cliente.init(ClienteSchema, Cliente.config(sequelize));
   Categoria.init(CategoriaSchema, Categoria.config(sequelize));
   Producto.init(ProductoSchema, Producto.config(sequelize));
+  ProductoTono.init(ProductoTonoSchema, ProductoTono.config(sequelize));
+  ProductoDetalle.init(
+    ProductoDetalleSchema,
+    ProductoDetalle.config(sequelize),
+  );
+  ProductoDetalleTono.init(
+    ProductoDetalleTonoSchema,
+    ProductoDetalleTono.config(sequelize),
+  );
 
   // Ejecuto la asociacion
   Pais.associate(sequelize.models);
@@ -29,6 +47,9 @@ const setupModels = (sequelize) => {
   Cliente.associate(sequelize.models);
   Categoria.associate(sequelize.models);
   Producto.associate(sequelize.models);
+  ProductoTono.associate(sequelize.models);
+  ProductoDetalle.associate(sequelize.models);
+  ProductoDetalleTono.associate(sequelize.models);
 
   // Estado_Pedido.associate(sequelize.models);
 };
