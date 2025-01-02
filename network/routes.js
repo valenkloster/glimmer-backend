@@ -9,8 +9,6 @@ import cliente from '../components/cliente/network.js';
 import auth from '../components/auth/network.js';
 import categoria from '../components/categoria/network.js';
 import producto from '../components/producto/network.js';
-import producto_tono from '../components/producto_tono/network.js';
-import producto_detalle from '../components/producto_detalle/network.js';
 
 function routerApi(app) {
   const router = express.Router();
@@ -25,8 +23,6 @@ function routerApi(app) {
   router.use('/auth', auth);
   router.use('/categorias', categoria);
   router.use('/productos', producto);
-  router.use('/producto_tonos', producto_tono);
-  router.use('/producto_detalles', producto_detalle);
 }
 
 export default routerApi;

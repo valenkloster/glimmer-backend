@@ -8,31 +8,6 @@ const service = new ProductService();
 
 const router = express.Router();
 
-router.get('/detail', async (req, res, next) => {
-  const { id_producto, tamanio, tono_color } = req.query; // Parámetros recibidos por query
-
-  try {
-    if (!id_producto || !tamanio) {
-      return res.status(400).json({
-        error: true,
-        message: 'Missing required parameters: productId and size',
-      });
-    }
-
-    const detail = await service.getProductDetail(
-      id_producto,
-      tamanio,
-      tono_color,
-    );
-    res.status(200).json({
-      error: false,
-      data: detail,
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-
 router.get('/busqueda', async (req, res, next) => {
   try {
     const { query } = req.query;
@@ -54,8 +29,27 @@ router.get('/categoria/:categoryId', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const { name, minPrice, maxPrice, brand } = req.query;
-    const filters = { name, minPrice, maxPrice, brand };
+    const {
+      name = null,
+      minPrice = null,
+      maxPrice = null,
+      brand = null,
+      id_producto = null, // Default to empty string if not provided
+      tamanio = null,
+      tono_color = null,
+    } = req.query;
+
+    // Crear objeto de filtros con los parámetros obtenidos
+    const filters = {
+      name,
+      minPrice,
+      maxPrice,
+      brand,
+      id_producto,
+      tamanio,
+      tono_color,
+    };
+    // Llamar al servicio para obtener los productos
     const products = await service.get(filters);
     success(req, res, products, 200);
   } catch (error) {

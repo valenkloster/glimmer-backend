@@ -35,29 +35,81 @@ class ProductService {
   }
 
   async get(filters = {}) {
-    const { name, minPrice, maxPrice, brand } = filters;
+    const {
+      name,
+      minPrice,
+      maxPrice,
+      brand,
+      id_producto,
+      tamanio,
+      tono_color,
+    } = filters;
+
     const options = {
       where: {},
+      include: [], // Inicializa include como un array vacío
     };
 
-    if (name) {
+    // Filtros básicos
+    if (name !== null) {
       options.where.nombre = { [Op.iLike]: `%${name}%` };
     }
 
-    if (minPrice) {
+    if (minPrice !== null) {
       if (!options.where.precio) options.where.precio = {};
       options.where.precio[Op.gte] = minPrice;
     }
 
-    if (maxPrice) {
+    if (maxPrice !== null) {
       if (!options.where.precio) options.where.precio = {};
       options.where.precio[Op.lte] = maxPrice;
     }
 
-    if (brand) {
+    if (brand !== null) {
       options.where.marca = { [Op.iLike]: `%${brand}%` };
     }
 
+    // Filtros relacionados a detalles
+    if (id_producto !== null || tamanio !== null || tono_color !== null) {
+      const detalleInclude = {
+        model: models.ProductoDetalle,
+        as: 'detalles',
+        include: [
+          {
+            model: models.Detalle,
+            as: 'detalle',
+            where: {},
+            attributes: ['tono_nombre', 'tono_color', 'tamanio', 'stock'],
+            required: true,
+          },
+        ],
+        required: true,
+      };
+
+      // Condiciones para detalleInclude.where
+      if (id_producto !== null) {
+        detalleInclude.where = detalleInclude.where || {};
+        detalleInclude.where.id_producto = { [Op.eq]: id_producto }; // Cambiado a igualdad
+      }
+
+      if (tamanio !== null) {
+        detalleInclude.include[0].where = detalleInclude.include[0].where || {};
+        detalleInclude.include[0].where.tamanio = {
+          [Op.iLike]: `%${tamanio}%`,
+        };
+      }
+
+      if (tono_color !== null) {
+        detalleInclude.include[0].where = detalleInclude.include[0].where || {};
+        detalleInclude.include[0].where.tono_color = {
+          [Op.iLike]: `%${tono_color}%`,
+        };
+      }
+
+      options.include.push(detalleInclude);
+    }
+
+    // Consulta con los filtros
     const products = await models.Producto.findAll(options);
     return products;
   }
@@ -118,78 +170,6 @@ class ProductService {
     });
     return products;
   }
-
-  async getProductDetail(id_producto, tamanio, tono_color = null) {
-    const detail = await models.ProductoDetalle.findOne({
-      where: {
-        id_producto: id_producto,
-      },
-      include: [
-        {
-          model: models.Producto,
-          as: 'producto', // Alias definido en el modelo para Producto
-          attributes: [
-            'id_producto',
-            'nombre',
-            'marca',
-            'descripcion',
-            'precio',
-            'imagen',
-          ],
-        },
-        {
-          model: models.Detalle,
-          as: 'detalle', // Alias definido en el modelo para Detalle
-          where: {
-            tamanio: tamanio,
-            ...(tono_color ? { tono_color: tono_color } : {}), // Filtra por color solo si se proporciona
-          },
-          attributes: ['tono_nombre', 'tono_color', 'tamanio', 'stock'],
-        },
-      ],
-    });
-
-    if (!detail) {
-      throw boom.notFound('Product detail not found');
-    }
-
-    // Estructurar el resultado para devolver tanto la información del producto como el detalle
-    return {
-      id_producto: detail.producto.id_producto,
-      nombre: detail.producto.nombre,
-      marca: detail.producto.marca,
-      descripcion: detail.producto.descripcion,
-      precio: detail.producto.precio,
-      imagen: detail.producto.imagen,
-      tamanio: detail.detalle.tamanio,
-      stock: detail.detalle.stock,
-      tono_nombre: detail.detalle.tono_nombre,
-      tono_color: detail.detalle.tono_color,
-    };
-  }
-
-  // async updateStock(idProducto, { tamanio, tono_color, stock }) {
-  //   try {
-  //     const detalle = await models.Detalle.findOne({
-  //       where: {
-  //         tono_color,
-  //         tamanio,
-  //       },
-  //     });
-
-  //     if (!detalle) {
-  //       throw new Error('Detalle no encontrado.');
-  //     }
-
-  //     // Actualizar el stock del detalle con el tono y tamaño especificados
-  //     detalle.stock = stock;
-  //     await detalle.save();
-
-  //     return detalle;
-  //   } catch (error) {
-  //     throw boom.boomify(error);
-  //   }
-  // }
 
   async delete(id) {
     try {

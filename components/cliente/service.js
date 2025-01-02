@@ -20,6 +20,7 @@ class CustomerService {
       user: {
         ...data.user,
         password: hash,
+        role: 'cliente',
       },
     };
 

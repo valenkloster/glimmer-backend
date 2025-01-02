@@ -24,7 +24,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/sign-up', async (req, res, next) => {
   try {
     const body = req.body;
     const newCustomer = await service.create(body);
