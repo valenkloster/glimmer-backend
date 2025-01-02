@@ -8,22 +8,26 @@ const service = new ProductService();
 
 const router = express.Router();
 
-router.get('/exact-detail', async (req, res, next) => {
+router.get('/detail', async (req, res, next) => {
+  const { id_producto, tamanio, tono_color } = req.query; // Parámetros recibidos por query
+
   try {
-    const { id_producto, tamanio, tono_color } = req.query;
-    if (!id_producto || !tamanio || !tono_color) {
+    if (!id_producto || !tamanio) {
       return res.status(400).json({
         error: true,
-        message: 'Required parameters: product_id, size and color.',
+        message: 'Missing required parameters: productId and size',
       });
     }
-    const idProductoNumerico = parseInt(id_producto, 10);
-    const detail = await service.getExactDetail(
-      idProductoNumerico,
+
+    const detail = await service.getProductDetail(
+      id_producto,
       tamanio,
       tono_color,
     );
-    success(req, res, detail, 200);
+    res.status(200).json({
+      error: false,
+      data: detail,
+    });
   } catch (error) {
     next(error);
   }
@@ -78,7 +82,8 @@ router.post(
       if (!data.detalles || !Array.isArray(data.detalles)) {
         return res.status(400).json({
           error: true,
-          message: 'Details must be an array containing size and stock.',
+          message:
+            'Detalles deben ser un array que contenga tamaño, stock y tonos.',
         });
       }
 
@@ -90,44 +95,44 @@ router.post(
   },
 );
 
-router.patch(
-  '/:id',
-  passport.authenticate('jwt', { session: false }),
-  checkRoles('admin'),
-  async (req, res, next) => {
-    try {
-      await service.update(req.params.id, req.body);
-      success(req, res, 'Product updated', 200);
-    } catch (error) {
-      next(error);
-    }
-  },
-);
+// router.patch(
+//   '/:id',
+//   passport.authenticate('jwt', { session: false }),
+//   checkRoles('admin'),
+//   async (req, res, next) => {
+//     try {
+//       await service.update(req.params.id, req.body);
+//       success(req, res, 'Product updated', 200);
+//     } catch (error) {
+//       next(error);
+//     }
+//   },
+// );
 
-router.patch(
-  '/:id/stock',
-  passport.authenticate('jwt', { session: false }),
-  checkRoles('admin'),
-  async (req, res, next) => {
-    try {
-      const { tamanio, tono_color, stock } = req.query;
-      if (!tamanio || !tono_color || !stock) {
-        return res.status(400).json({
-          error: true,
-          message: 'Required parameters: size, color tone, and stock.',
-        });
-      }
-      const updatedStock = await service.updateStock(req.params.id, {
-        tamanio,
-        tono_color,
-        stock,
-      });
-      success(req, res, updatedStock, 200);
-    } catch (error) {
-      next(error);
-    }
-  },
-);
+// router.patch(
+//   '/:id/stock',
+//   passport.authenticate('jwt', { session: false }),
+//   checkRoles('admin'),
+//   async (req, res, next) => {
+//     try {
+//       const { tamanio, tono_color, stock } = req.query;
+//       if (!tamanio || !tono_color || !stock) {
+//         return res.status(400).json({
+//           error: true,
+//           message: 'Required parameters: size, color tone, and stock.',
+//         });
+//       }
+//       const updatedStock = await service.updateStock(req.params.id, {
+//         tamanio,
+//         tono_color,
+//         stock,
+//       });
+//       success(req, res, updatedStock, 200);
+//     } catch (error) {
+//       next(error);
+//     }
+//   },
+// );
 
 router.delete(
   '/:id',

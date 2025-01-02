@@ -1,5 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import { PRODUCTO_TABLE } from '../producto/model.js';
+import { DETALLE_TABLE } from '../detalle/model.js';
 
 const PRODUCTO_DETALLE_TABLE = 'Producto_Detalle';
 
@@ -20,13 +21,15 @@ const ProductoDetalleSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   },
-  tamanio: {
-    type: DataTypes.STRING(50),
-    allowNull: true,
-  },
-  stock: {
+  id_detalle: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    references: {
+      model: DETALLE_TABLE,
+      key: 'id_detalle',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
   },
 };
 
@@ -35,10 +38,12 @@ class ProductoDetalle extends Model {
     this.belongsTo(models.Producto, {
       as: 'producto',
       foreignKey: 'id_producto',
+      targetKey: 'id_producto',
     });
-    this.hasMany(models.ProductoDetalleTono, {
-      as: 'detallesTonos',
-      foreignKey: 'id_producto_detalle',
+    this.belongsTo(models.Detalle, {
+      as: 'detalle',
+      foreignKey: 'id_detalle',
+      targetKey: 'id_detalle',
     });
   }
 
