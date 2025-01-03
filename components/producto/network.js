@@ -34,12 +34,11 @@ router.get('/', async (req, res, next) => {
       minPrice = null,
       maxPrice = null,
       brand = null,
-      id_producto = null, // Default to empty string if not provided
+      id_producto = null,
       tamanio = null,
       tono_color = null,
     } = req.query;
 
-    // Crear objeto de filtros con los parámetros obtenidos
     const filters = {
       name,
       minPrice,
@@ -49,7 +48,6 @@ router.get('/', async (req, res, next) => {
       tamanio,
       tono_color,
     };
-    // Llamar al servicio para obtener los productos
     const products = await service.get(filters);
     success(req, res, products, 200);
   } catch (error) {

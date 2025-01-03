@@ -47,7 +47,7 @@ class ProductService {
 
     const options = {
       where: {},
-      include: [], // Inicializa include como un array vacío
+      include: [],
     };
 
     // Filtros básicos
@@ -69,7 +69,6 @@ class ProductService {
       options.where.marca = { [Op.iLike]: `%${brand}%` };
     }
 
-    // Filtros relacionados a detalles
     if (id_producto !== null || tamanio !== null || tono_color !== null) {
       const detalleInclude = {
         model: models.ProductoDetalle,
@@ -79,14 +78,19 @@ class ProductService {
             model: models.Detalle,
             as: 'detalle',
             where: {},
-            attributes: ['tono_nombre', 'tono_color', 'tamanio', 'stock'],
+            attributes: [
+              'id_detalle',
+              'tono_nombre',
+              'tono_color',
+              'tamanio',
+              'stock',
+            ],
             required: true,
           },
         ],
         required: true,
       };
 
-      // Condiciones para detalleInclude.where
       if (id_producto !== null) {
         detalleInclude.where = detalleInclude.where || {};
         detalleInclude.where.id_producto = { [Op.eq]: id_producto }; // Cambiado a igualdad
@@ -109,7 +113,6 @@ class ProductService {
       options.include.push(detalleInclude);
     }
 
-    // Consulta con los filtros
     const products = await models.Producto.findAll(options);
     return products;
   }
@@ -121,6 +124,7 @@ class ProductService {
         include: [
           {
             model: models.Detalle,
+            as: 'detalles_completos',
             attributes: ['tono_nombre', 'tono_color', 'tamanio', 'stock'],
           },
         ],
