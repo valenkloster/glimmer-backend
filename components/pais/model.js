@@ -4,10 +4,10 @@ const PAIS_TABLE = 'Pais';
 
 const PaisSchema = {
   id_pais: {
+    type: DataTypes.INTEGER,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
   },
   nombre: {
     type: DataTypes.STRING,

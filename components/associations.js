@@ -9,16 +9,11 @@ import { Categoria, CategoriaSchema } from './categoria/model.js';
 import { Detalle, DetalleSchema } from './detalle/model.js';
 import { Producto, ProductoSchema } from './producto/model.js';
 import {
-  ProductoDetalle,
+  Producto_Detalle,
   ProductoDetalleSchema,
 } from './producto_detalle/model.js';
-// import { ProductoTono, ProductoTonoSchema } from './producto_tono/model.js';
-// import {
-//   ProductoDetalleTono,
-//   ProductoDetalleTonoSchema,
-// } from './producto_detalle_tono/model.js';
+import { Favoritos, FavoritosSchema } from './favoritos/model.js';
 
-// Inicializa todos los modelos
 const setupModels = (sequelize) => {
   Pais.init(PaisSchema, Pais.config(sequelize));
   Provincia.init(ProvinciaSchema, Provincia.config(sequelize));
@@ -30,15 +25,11 @@ const setupModels = (sequelize) => {
   Categoria.init(CategoriaSchema, Categoria.config(sequelize));
   Detalle.init(DetalleSchema, Detalle.config(sequelize));
   Producto.init(ProductoSchema, Producto.config(sequelize));
-  ProductoDetalle.init(
+  Producto_Detalle.init(
     ProductoDetalleSchema,
-    ProductoDetalle.config(sequelize),
+    Producto_Detalle.config(sequelize),
   );
-  // ProductoTono.init(ProductoTonoSchema, ProductoTono.config(sequelize));
-  // ProductoDetalleTono.init(
-  //   ProductoDetalleTonoSchema,
-  //   ProductoDetalleTono.config(sequelize),
-  // );
+  Favoritos.init(FavoritosSchema, Favoritos.config(sequelize));
 
   // Ejecuto la asociacion
   Pais.associate(sequelize.models);
@@ -50,11 +41,8 @@ const setupModels = (sequelize) => {
   Categoria.associate(sequelize.models);
   Detalle.associate(sequelize.models);
   Producto.associate(sequelize.models);
-  ProductoDetalle.associate(sequelize.models);
-  // ProductoTono.associate(sequelize.models);
-  // ProductoDetalleTono.associate(sequelize.models);
-
-  // Estado_Pedido.associate(sequelize.models);
+  Producto_Detalle.associate(sequelize.models);
+  Favoritos.associate(sequelize.models);
 };
 
 export default setupModels;

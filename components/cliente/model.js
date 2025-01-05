@@ -4,10 +4,9 @@ import { USER_TABLE } from '../user/model.js';
 const CLIENTE_TABLE = 'Cliente';
 
 const ClienteSchema = {
-  id: {
-    type: DataTypes.INTEGER,
+  id_cliente: {
+    type: DataTypes.STRING,
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
   },
   nombre: {
@@ -31,12 +30,12 @@ const ClienteSchema = {
     },
   },
   id_user: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false,
     unique: true,
     references: {
       model: USER_TABLE,
-      key: 'id',
+      key: 'id_user',
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL',
@@ -46,6 +45,10 @@ const ClienteSchema = {
 class Cliente extends Model {
   static associate(models) {
     this.belongsTo(models.User, { as: 'user', foreignKey: 'id_user' });
+    this.hasMany(models.Favoritos, {
+      as: 'favoritos',
+      foreignKey: 'id_cliente',
+    });
   }
 
   static config(sequelize) {

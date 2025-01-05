@@ -4,6 +4,7 @@ const { models } = sequelize;
 import bcrypt from 'bcrypt';
 import UserService from '../user/service.js';
 const service = new UserService();
+import { v4 as uuidv4 } from 'uuid';
 
 class CustomerService {
   constructor() {}
@@ -13,11 +14,18 @@ class CustomerService {
     if (user) {
       throw boom.conflict('Email must be unique');
     }
-
     const hash = await bcrypt.hash(data.user.password, 10);
+    let uuid;
+    if (data.id_cliente === undefined) {
+      uuid = uuidv4();
+    } else {
+      uuid = data.id_cliente;
+    }
     const newData = {
+      id_cliente: uuid,
       ...data,
       user: {
+        id_user: uuid,
         ...data.user,
         password: hash,
         role: 'cliente',

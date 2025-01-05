@@ -33,7 +33,7 @@ const ProductoDetalleSchema = {
   },
 };
 
-class ProductoDetalle extends Model {
+class Producto_Detalle extends Model {
   static associate(models) {
     this.belongsTo(models.Producto, {
       as: 'producto',
@@ -51,10 +51,10 @@ class ProductoDetalle extends Model {
     return {
       sequelize,
       tableName: PRODUCTO_DETALLE_TABLE,
-      modelName: 'ProductoDetalle',
+      modelName: 'Producto_Detalle',
       timestamps: false,
     };
   }
 }
 
-export { PRODUCTO_DETALLE_TABLE, ProductoDetalleSchema, ProductoDetalle };
+export { PRODUCTO_DETALLE_TABLE, ProductoDetalleSchema, Producto_Detalle };

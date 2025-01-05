@@ -18,17 +18,19 @@ class UserService {
 
   async get() {
     const users = await models.User.findAll();
-    const usersToReturn = users.map(({ dataValues: { id, email, role } }) => ({
-      id,
-      email,
-      role,
-    }));
+    const usersToReturn = users.map(
+      ({ dataValues: { id_user, email, role } }) => ({
+        id_user,
+        email,
+        role,
+      }),
+    );
     return usersToReturn;
   }
 
-  async getById(id) {
+  async getById(id_user) {
     const user = await models.User.findOne({
-      where: { id },
+      where: { id_user },
     });
     if (!user) {
       throw boom.notFound('user not found');

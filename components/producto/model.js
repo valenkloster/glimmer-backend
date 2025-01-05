@@ -70,16 +70,19 @@ const ProductoSchema = {
 
 class Producto extends Model {
   static associate(models) {
-    this.hasMany(models.ProductoDetalle, {
+    this.hasMany(models.Producto_Detalle, {
       as: 'detalles',
       foreignKey: 'id_producto',
     });
-
     this.belongsToMany(models.Detalle, {
-      through: models.ProductoDetalle,
+      through: models.Producto_Detalle,
       as: 'detalles_completos',
       foreignKey: 'id_producto',
       otherKey: 'id_detalle',
+    });
+    this.hasMany(models.Favoritos, {
+      as: 'favoritos',
+      foreignKey: 'id_producto',
     });
   }
 

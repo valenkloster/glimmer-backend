@@ -24,7 +24,7 @@ class AuthService {
 
   signToken(user) {
     const payload = {
-      sub: user.id,
+      sub: user.id_user,
       role: user.role,
     };
     const token = jwt.sign(payload, config.jwtSecret, {
@@ -42,7 +42,7 @@ class AuthService {
     if (!user) {
       throw new Error('User not found');
     }
-    const payload = { sub: user.id };
+    const payload = { sub: user.id_user };
     const token = jwt.sign(payload, config.jwtSecretRecovery, {
       expiresIn: '15min',
     });

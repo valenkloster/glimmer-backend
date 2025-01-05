@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 
-const DETALLE_TABLE = 'Detalle';  // Corregido el nombre de la tabla
+const DETALLE_TABLE = 'Detalle';
 
 const DetalleSchema = {
   id_detalle: {
@@ -30,7 +30,7 @@ const DetalleSchema = {
 class Detalle extends Model {
   static associate(models) {
     this.belongsToMany(models.Producto, {
-      through: models.ProductoDetalle,
+      through: models.Producto_Detalle,
       foreignKey: 'id_detalle',
       otherKey: 'id_producto',
     });

@@ -71,7 +71,7 @@ class ProductService {
 
     if (id_producto !== null || tamanio !== null || tono_color !== null) {
       const detalleInclude = {
-        model: models.ProductoDetalle,
+        model: models.Producto_Detalle,
         as: 'detalles',
         include: [
           {

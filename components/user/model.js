@@ -3,10 +3,9 @@ import { Model, DataTypes } from 'sequelize';
 const USER_TABLE = 'User';
 
 const UserSchema = {
-  id: {
-    type: DataTypes.INTEGER,
+  id_user: {
+    type: DataTypes.STRING,
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
   },
   email: {
