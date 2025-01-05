@@ -224,6 +224,19 @@ const Favoritos = [
   },
 ];
 
+const Usuario_Direcciones = [
+  {
+    id_usuario_direccion: 1,
+    id_cliente: 1,
+    id_direccion: 1,
+  },
+  {
+    id_usuario_direccion: 2,
+    id_cliente: 2,
+    id_direccion: 2,
+  },
+];
+
 async function seed() {
   try {
     console.log(sequelize.models);
@@ -239,6 +252,7 @@ async function seed() {
     await sequelize.models.User.bulkCreate(Users);
     await sequelize.models.Cliente.bulkCreate(Clientes);
     await sequelize.models.Favoritos.bulkCreate(Favoritos);
+    await sequelize.models.Usuario_Direccion.bulkCreate(Usuario_Direcciones);
     console.log('Database seeded 😁');
   } catch (error) {
     console.error(error);
