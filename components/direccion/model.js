@@ -5,10 +5,10 @@ const DIRECCION_TABLE = 'Direccion';
 
 const DireccionSchema = {
   id_direccion: {
+    type: DataTypes.INTEGER,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
   },
   direccion: {
     type: DataTypes.STRING,

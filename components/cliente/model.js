@@ -49,6 +49,10 @@ class Cliente extends Model {
       as: 'favoritos',
       foreignKey: 'id_cliente',
     });
+    this.hasMany(models.Usuario_Direccion, {
+      as: 'direcciones',
+      foreignKey: 'id_usuario_direccion',
+    });
   }
 
   static config(sequelize) {

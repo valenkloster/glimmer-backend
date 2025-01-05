@@ -13,6 +13,10 @@ import {
   ProductoDetalleSchema,
 } from './producto_detalle/model.js';
 import { Favoritos, FavoritosSchema } from './favoritos/model.js';
+import {
+  Usuario_Direccion,
+  UsuarioDireccionSchema,
+} from './usuario_direccion/model.js';
 
 const setupModels = (sequelize) => {
   Pais.init(PaisSchema, Pais.config(sequelize));
@@ -30,8 +34,11 @@ const setupModels = (sequelize) => {
     Producto_Detalle.config(sequelize),
   );
   Favoritos.init(FavoritosSchema, Favoritos.config(sequelize));
+  Usuario_Direccion.init(
+    UsuarioDireccionSchema,
+    Usuario_Direccion.config(sequelize),
+  );
 
-  // Ejecuto la asociacion
   Pais.associate(sequelize.models);
   Provincia.associate(sequelize.models);
   Localidad.associate(sequelize.models);
@@ -43,6 +50,7 @@ const setupModels = (sequelize) => {
   Producto.associate(sequelize.models);
   Producto_Detalle.associate(sequelize.models);
   Favoritos.associate(sequelize.models);
+  Usuario_Direccion.associate(sequelize.models);
 };
 
 export default setupModels;

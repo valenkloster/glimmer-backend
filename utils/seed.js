@@ -211,6 +211,19 @@ const Clientes = [
   },
 ];
 
+const Favoritos = [
+  {
+    id_favorito: 1,
+    id_cliente: 1,
+    id_producto: 1,
+  },
+  {
+    id_favorito: 2,
+    id_cliente: 1,
+    id_producto: 2,
+  },
+];
+
 async function seed() {
   try {
     console.log(sequelize.models);
@@ -225,6 +238,7 @@ async function seed() {
     await sequelize.models.Estado_Pedido.bulkCreate(Estado_Pedidos);
     await sequelize.models.User.bulkCreate(Users);
     await sequelize.models.Cliente.bulkCreate(Clientes);
+    await sequelize.models.Favoritos.bulkCreate(Favoritos);
     console.log('Database seeded 😁');
   } catch (error) {
     console.error(error);

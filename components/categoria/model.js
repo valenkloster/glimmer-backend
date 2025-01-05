@@ -19,7 +19,7 @@ const CategoriaSchema = {
   },
   id_categoria_padre: {
     type: DataTypes.INTEGER,
-    allowNull: true, // Puede ser NULL para las categorías principales
+    allowNull: true,
     references: {
       model: CATEGORIA_TABLE,
       key: 'id_categoria',
@@ -31,19 +31,16 @@ const CategoriaSchema = {
 
 class Categoria extends Model {
   static associate(models) {
-    // Relación de una categoría con su categoría padre
     this.belongsTo(models.Categoria, {
       as: 'categoriaPadre',
       foreignKey: 'id_categoria_padre',
     });
 
-    // Relación de una categoría con sus subcategorías
     this.hasMany(models.Categoria, {
       as: 'subcategorias',
       foreignKey: 'id_categoria_padre',
     });
 
-    // Relación de una categoría con sus productos
     this.hasMany(models.Producto, {
       as: 'productos',
       foreignKey: 'id_categoria',
