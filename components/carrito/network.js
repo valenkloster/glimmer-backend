@@ -8,37 +8,37 @@ const service = new CarritoService();
 
 const router = express.Router();
 
-// Create a new cart for a client
+// Create a new Bag for a client
 router.post(
   '/create/',
   passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
     try {
       const { sub } = req.user;
-      const cart = await service.createCart(sub);
-      success(req, res, cart, 200);
+      const bag = await service.createBag(sub);
+      success(req, res, bag, 200);
     } catch (error) {
       next(error);
     }
   },
 );
 
-// Get cart by client ID
+// Get Bag by client ID
 router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
     try {
       const { sub } = req.user;
-      const cart = await service.getCartByClient(sub);
-      res.status(200).json(cart);
+      const bag = await service.getBagByClient(sub);
+      res.status(200).json(bag);
     } catch (error) {
       next(error);
     }
   },
 );
 
-// Add a product detail to the cart
+// Add a product detail to the Bag
 router.post(
   '/add/',
   passport.authenticate('jwt', { session: false }),
@@ -50,19 +50,15 @@ router.post(
       if (cantidad <= 0) {
         throw boom.badRequest('Quantity must be greater than zero');
       }
-      const cartDetail = await service.addProductToCart(
-        sub,
-        id_detalle,
-        cantidad,
-      );
-      success(req, res, cartDetail, 200);
+      await service.addProductToBag(sub, id_detalle, cantidad);
+      success(req, res, 'Product added', 200);
     } catch (error) {
       next(error);
     }
   },
 );
 
-// Update quantity product in the cart
+// Update quantity product in the Bag
 router.patch(
   '/update/',
   passport.authenticate('jwt', { session: false }),
@@ -72,26 +68,26 @@ router.patch(
       if (cantidad <= 0) {
         throw boom.badRequest('Quantity must be greater than zero');
       }
-      const cartDetail = await service.updateProductInCart(
+      const bagDetail = await service.updateProductInBag(
         id_carrito_detalle,
         cantidad,
       );
-      success(req, res, cartDetail, 200);
+      success(req, res, bagDetail, 200);
     } catch (error) {
       next(error);
     }
   },
 );
 
-// Remove a product from the cart
+// Remove a product from the Bag
 router.delete(
   '/remove/',
   passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
     try {
       const { id_carrito_detalle } = req.body;
-      const cart = await service.removeProductFromCart(id_carrito_detalle);
-      success(req, res, cart, 200);
+      const bag = await service.removeProductFromBag(id_carrito_detalle);
+      success(req, res, bag, 200);
     } catch (error) {
       next(error);
     }
