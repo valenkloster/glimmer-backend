@@ -44,41 +44,6 @@ router.patch(
 );
 
 router.patch(
-  '/stock/ajustar',
-  passport.authenticate('jwt', { session: false }),
-  checkRoles('admin'),
-  async (req, res, next) => {
-    try {
-      const {
-        name = null,
-        minPrice = null,
-        maxPrice = null,
-        brand = null,
-        id_producto = null,
-        tamanio = null,
-        tono_color = null,
-      } = req.query;
-
-      const filters = {
-        name,
-        minPrice,
-        maxPrice,
-        brand,
-        id_producto,
-        tamanio,
-        tono_color,
-      };
-      const { cantidad } = req.query;
-      const updatedDetalle = await service.reduceStockbyOne(filters, cantidad);
-
-      success(req, res, updatedDetalle, 200);
-    } catch (error) {
-      next(error);
-    }
-  },
-);
-
-router.patch(
   '/price',
   passport.authenticate('jwt', { session: false }),
   checkRoles('admin'),
