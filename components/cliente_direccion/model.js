@@ -1,13 +1,13 @@
 import { Model, DataTypes } from 'sequelize';
 
-const USUARIO_DIRECCION_TABLE = 'Usuario_Direccion';
+const CLIENTE_DIRECCION_TABLE = 'Cliente_Direccion';
 
-const UsuarioDireccionSchema = {
-  id_usuario_direccion: {
+const ClienteDireccionSchema = {
+  id_cliente_direccion: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
+    autoIncrement: true,
   },
   id_cliente: {
     type: DataTypes.STRING,
@@ -27,7 +27,7 @@ const UsuarioDireccionSchema = {
   },
 };
 
-class Usuario_Direccion extends Model {
+class Cliente_Direccion extends Model {
   static associate(models) {
     this.belongsTo(models.Cliente, {
       as: 'cliente',
@@ -43,11 +43,11 @@ class Usuario_Direccion extends Model {
   static config(sequelize) {
     return {
       sequelize,
-      tableName: USUARIO_DIRECCION_TABLE,
-      modelName: 'Usuario_Direccion',
+      tableName: CLIENTE_DIRECCION_TABLE,
+      modelName: 'Cliente_Direccion',
       timestamps: false,
     };
   }
 }
 
-export { USUARIO_DIRECCION_TABLE, UsuarioDireccionSchema, Usuario_Direccion };
+export { CLIENTE_DIRECCION_TABLE, ClienteDireccionSchema, Cliente_Direccion };

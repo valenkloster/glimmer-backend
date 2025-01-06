@@ -16,12 +16,12 @@ const EstadoPedidoSchema = {
 };
 
 class Estado_Pedido extends Model {
-  // static associate(models) {
-  //   this.hasMany(models.Pedido, {
-  //     as: 'pedidos',
-  //     foreignKey: 'id_estado_pedido',
-  //   });
-  // }
+  static associate(models) {
+    this.hasMany(models.Pedido, {
+      as: 'pedidos',
+      foreignKey: 'id_estado_pedido',
+    });
+  }
 
   static config(sequelize) {
     return {

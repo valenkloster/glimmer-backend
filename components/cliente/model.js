@@ -49,9 +49,17 @@ class Cliente extends Model {
       as: 'favoritos',
       foreignKey: 'id_cliente',
     });
-    this.hasMany(models.Usuario_Direccion, {
+    this.hasMany(models.Cliente_Direccion, {
       as: 'direcciones',
-      foreignKey: 'id_usuario_direccion',
+      foreignKey: 'id_cliente',
+    });
+    this.hasMany(models.Pedido, {
+      as: 'pedidos',
+      foreignKey: 'id_cliente',
+    });
+    this.hasOne(models.Carrito, {
+      as: 'carrito',
+      foreignKey: 'id_cliente',
     });
   }
 

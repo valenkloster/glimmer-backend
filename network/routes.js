@@ -11,7 +11,7 @@ import categoria from '../components/categoria/network.js';
 import producto from '../components/producto/network.js';
 import detalle from '../components/detalle/network.js';
 import favoritos from '../components/favoritos/network.js';
-import usuario_direcciones from '../components/usuario_direccion/network.js';
+import cliente_direcciones from '../components/cliente_direccion/network.js';
 
 function routerApi(app) {
   const router = express.Router();
@@ -28,7 +28,7 @@ function routerApi(app) {
   router.use('/productos', producto);
   router.use('/detalles', detalle);
   router.use('/favoritos', favoritos);
-  router.use('/usuario_direcciones', usuario_direcciones);
+  router.use('/cliente_direcciones', cliente_direcciones);
 }
 
 export default routerApi;
