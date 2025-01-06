@@ -1,7 +1,6 @@
 import express from 'express';
 import { success } from '../../network/response.js';
 import passport from 'passport';
-import { checkRoles } from '../../middleware/auth.handler.js';
 import PedidoService from './service.js';
 
 const router = express.Router();
@@ -16,21 +15,6 @@ router.post(
       const { id_cliente_direccion } = req.body;
       const newOrder = await service.createOrder(sub, id_cliente_direccion);
       success(req, res, newOrder, 201);
-    } catch (error) {
-      next(error);
-    }
-  },
-);
-
-router.get(
-  '/search',
-  passport.authenticate('jwt', { session: false }),
-  checkRoles('admin'),
-  async (req, res, next) => {
-    try {
-      const filters = req.query;
-      const orders = await service.searchOrders(filters);
-      success(req, res, orders, 200);
     } catch (error) {
       next(error);
     }

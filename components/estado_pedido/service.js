@@ -1,31 +1,24 @@
-import boom from '@hapi/boom';
 import sequelize from '../../libs/sequelize.js';
 const { models } = sequelize;
+import boom from '@hapi/boom';
 
 class EstadoPedidoService {
   constructor() {}
+  async getOrdersByStatus(id_estado_pedido) {
+    const orders = await models.Pedido.findAll({
+      where: { id_estado_pedido },
+      include: [
+        { association: 'cliente' },
+        { association: 'cliente_direccion', include: ['direccion'] },
+        { association: 'detalles', include: ['detalle'] },
+      ],
+    });
 
-  async create(data) {
-    const newOrderStatus = await models.Estado_Pedido.create(data);
-    return newOrderStatus;
-  }
-
-  async get() {
-    const orderStatus = await models.Estado_Pedido.findAll();
-    return orderStatus;
-  }
-
-  async getById(id) {
-    const orderStatus = await models.Estado_Pedido.findByPk(id);
-    if (!orderStatus) {
-      throw boom.notFound('Order Status not found');
+    if (!orders.length) {
+      throw boom.notFound('No orders found for this status');
     }
-    return orderStatus;
-  }
 
-  async delete(id) {
-    const orderStatus = await this.getById(id);
-    await orderStatus.destroy();
+    return orders;
   }
 }
 

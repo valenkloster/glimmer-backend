@@ -1,45 +1,26 @@
 import express from 'express';
 import { success } from '../../network/response.js';
-
+import passport from 'passport';
+import { checkRoles } from '../../middleware/auth.handler.js';
 import EstadoPedidoService from './service.js';
-const service = new EstadoPedidoService();
 
 const router = express.Router();
+const service = new EstadoPedidoService();
 
-router.get('/', async (req, res, next) => {
-  try {
-    const orderStatus = await service.get();
-    success(req, res, orderStatus, 200);
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.get('/:id', async (req, res, next) => {
-  try {
-    const orderStatus = await service.getById(req.params.id);
-    success(req, res, orderStatus, 200);
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.post('/', async (req, res, next) => {
-  try {
-    await service.create(req.body);
-    success(req, res, 'Order Status created', 201);
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.delete('/:id', async (req, res, next) => {
-  try {
-    await service.delete(req.params.id);
-    success(req, res, 'Order Status deleted', 200);
-  } catch (error) {
-    next(error);
-  }
-});
+// Route to get orders by status ID
+router.get(
+  '/:id_estado_pedido',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin'),
+  async (req, res, next) => {
+    try {
+      const { id_estado_pedido } = req.params;
+      const orders = await service.getOrdersByStatus(id_estado_pedido);
+      success(req, res, orders, 200);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 
 export default router;

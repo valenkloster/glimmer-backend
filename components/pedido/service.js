@@ -90,37 +90,6 @@ class PedidoService {
   //   await order.save();
   //   return order;
   // }
-
-  async searchOrders(filters) {
-    const whereConditions = {};
-
-    if (filters.id_estado_pedido) {
-      whereConditions.id_estado_pedido = filters.id_estado_pedido;
-    }
-
-    if (filters.id_cliente_direccion) {
-      whereConditions.id_cliente_direccion = filters.id_cliente_direccion;
-    }
-
-    const orders = await models.Pedido.findAll({
-      where: whereConditions,
-      include: [
-        {
-          association: 'cliente_direccion',
-          include: ['direccion'], // Aquí incluimos la dirección asociada
-        },
-        {
-          association: 'estado',
-        },
-        {
-          association: 'detalles',
-          include: ['detalle'], // Incluye el detalle de los productos
-        },
-      ],
-    });
-
-    return orders;
-  }
 }
 
 export default PedidoService;
