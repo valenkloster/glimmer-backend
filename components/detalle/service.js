@@ -32,7 +32,7 @@ class ProductDetailService {
     return detalle.detalle;
   }
 
-  async actualizarStock(filters, cantidad) {
+  async reduceStockbyOne(filters, cantidad) {
     const { id_producto, tamanio, tono_color } = filters;
 
     if (!id_producto || !tamanio || !cantidad) {

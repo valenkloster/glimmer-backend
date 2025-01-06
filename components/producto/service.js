@@ -15,7 +15,7 @@ class ProductService {
     const product = await models.Producto.create(data);
 
     for (const detalle of detalles) {
-      const { tono_nombre, tono_color, tamanio, stock } = detalle;
+      const { tono_nombre, tono_color, tamanio, stock, precio } = detalle;
 
       // Crear detalle con valores opcionales de tono
       const newDetalle = await models.Detalle.create({
@@ -23,14 +23,14 @@ class ProductService {
         tono_color: tono_color || null, // Si es null, se guarda como null
         tamanio,
         stock,
+        precio,
       });
 
-      await models.ProductoDetalle.create({
+      await models.Producto_Detalle.create({
         id_producto: product.id_producto,
         id_detalle: newDetalle.id_detalle,
       });
     }
-
     return product;
   }
 
@@ -55,16 +55,6 @@ class ProductService {
       options.where.nombre = { [Op.iLike]: `%${name}%` };
     }
 
-    if (minPrice !== null) {
-      if (!options.where.precio) options.where.precio = {};
-      options.where.precio[Op.gte] = minPrice;
-    }
-
-    if (maxPrice !== null) {
-      if (!options.where.precio) options.where.precio = {};
-      options.where.precio[Op.lte] = maxPrice;
-    }
-
     if (brand !== null) {
       options.where.marca = { [Op.iLike]: `%${brand}%` };
     }
@@ -84,6 +74,7 @@ class ProductService {
               'tono_color',
               'tamanio',
               'stock',
+              'precio',
             ],
             required: true,
           },
@@ -110,6 +101,19 @@ class ProductService {
         };
       }
 
+      if (minPrice !== null) {
+        detalleInclude.include[0].where.precio = {
+          [Op.gte]: minPrice,
+        };
+      }
+
+      if (maxPrice !== null) {
+        detalleInclude.include[0].where.precio = {
+          ...detalleInclude.include[0].where.precio,
+          [Op.lte]: maxPrice,
+        };
+      }
+
       options.include.push(detalleInclude);
     }
 
@@ -125,7 +129,13 @@ class ProductService {
           {
             model: models.Detalle,
             as: 'detalles_completos',
-            attributes: ['tono_nombre', 'tono_color', 'tamanio', 'stock'],
+            attributes: [
+              'tono_nombre',
+              'tono_color',
+              'tamanio',
+              'stock',
+              'precio',
+            ],
           },
         ],
       });

@@ -42,16 +42,6 @@ const ProductoSchema = {
       },
     },
   },
-  precio: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false,
-    validate: {
-      min: {
-        args: [0],
-        msg: 'El precio no puede ser negativo',
-      },
-    },
-  },
   imagen: {
     type: DataTypes.STRING(255),
     allowNull: false,

@@ -25,6 +25,16 @@ const DetalleSchema = {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  precio: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,
+    validate: {
+      min: {
+        args: [0],
+        msg: 'El precio no puede ser negativo',
+      },
+    },
+  },
 };
 
 class Detalle extends Model {

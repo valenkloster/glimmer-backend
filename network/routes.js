@@ -12,6 +12,7 @@ import producto from '../components/producto/network.js';
 import detalle from '../components/detalle/network.js';
 import favoritos from '../components/favoritos/network.js';
 import cliente_direcciones from '../components/cliente_direccion/network.js';
+import carrito from '../components/carrito/network.js';
 
 function routerApi(app) {
   const router = express.Router();
@@ -29,6 +30,7 @@ function routerApi(app) {
   router.use('/detalles', detalle);
   router.use('/favoritos', favoritos);
   router.use('/cliente_direcciones', cliente_direcciones);
+  router.use('/carrito', carrito);
 }
 
 export default routerApi;

@@ -6,6 +6,9 @@ import UserService from '../user/service.js';
 const service = new UserService();
 import { v4 as uuidv4 } from 'uuid';
 
+import CarritoService from '../carrito/service.js';
+const carritoService = new CarritoService();
+
 class CustomerService {
   constructor() {}
 
@@ -31,11 +34,11 @@ class CustomerService {
         role: 'cliente',
       },
     };
-
     const newCustomer = await models.Cliente.create(newData, {
       include: ['user'],
     });
     delete newCustomer.dataValues.user.dataValues.password;
+    await carritoService.createCart(newCustomer.id_cliente);
     return newCustomer;
   }
 

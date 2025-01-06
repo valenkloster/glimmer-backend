@@ -69,7 +69,7 @@ router.patch(
         tono_color,
       };
       const { cantidad } = req.query;
-      const updatedDetalle = await service.actualizarStock(filters, cantidad);
+      const updatedDetalle = await service.reduceStockbyOne(filters, cantidad);
 
       success(req, res, updatedDetalle, 200);
     } catch (error) {

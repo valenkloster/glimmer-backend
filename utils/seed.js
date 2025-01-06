@@ -35,7 +35,6 @@ const Productos = [
     marca: 'Charlotte Tilbury',
     descripcion:
       'La base Airbrush Flawless Foundation de Charlotte es duradera, ligera y un híbrido entre base y cuidado de la piel: el secreto para una tez perfecta, sin poros y segura de sí misma.',
-    precio: 4900,
     imagen: 'http://media.ulta.com/i/ulta/2624531?w=1080&h=1080&fmt=auto',
     id_categoria: 4,
   },
@@ -44,7 +43,6 @@ const Productos = [
     nombre: 'Labial líquido mate',
     marca: 'MAC',
     descripcion: 'Labial líquido mate de larga duración.',
-    precio: 2500,
     imagen: 'http://media.ulta.com/i/ulta/2624531?w=1080&h=1080&fmt=auto',
     id_categoria: 3,
   },
@@ -56,18 +54,21 @@ const Detalles = [
     tono_color: '#F4E1D2',
     tamanio: '1.0 oz',
     stock: 50,
+    precio: 4900,
   },
   {
     tono_nombre: 'Neutro',
     tono_color: '#F5DEC9',
     tamanio: '2.0 oz',
     stock: 50,
+    precio: 7000,
   },
   {
     tono_nombre: null,
     tono_color: null,
     tamanio: '2.0 oz',
     stock: 50,
+    precio: 3000,
   },
 ];
 
@@ -162,7 +163,7 @@ const Users = [
     recovery_token: null,
   },
   {
-    email: 'valekloste18@gmail.com',
+    email: 'valekloster18@gmail.com',
     password: password,
     role: 'admin',
     recovery_token: null,
@@ -204,6 +205,29 @@ const Cliente_Direcciones = [
   },
 ];
 
+const Carrito_Detalles = [
+  {
+    id_carrito: 1,
+    id_detalle: 1,
+    cantidad: 2,
+    precio: 9800,
+  },
+  {
+    id_carrito: 1,
+    id_detalle: 2,
+    cantidad: 1,
+    precio: 7000,
+  },
+];
+
+const Carritos = [
+  {
+    fecha: new Date(),
+    monto_total: 16800,
+    id_cliente: 1,
+  },
+];
+
 async function seed() {
   try {
     console.log(sequelize.models);
@@ -220,6 +244,8 @@ async function seed() {
     await sequelize.models.Estado_Pedido.bulkCreate(Estado_Pedidos);
     await sequelize.models.Favoritos.bulkCreate(Favorito);
     await sequelize.models.Cliente_Direccion.bulkCreate(Cliente_Direcciones);
+    await sequelize.models.Carrito_Detalle.bulkCreate(Carrito_Detalles);
+    await sequelize.models.Carrito.bulkCreate(Carritos);
     console.log('Database seeded 😁');
   } catch (error) {
     console.error(error);
