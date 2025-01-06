@@ -8,21 +8,6 @@ const service = new CarritoService();
 
 const router = express.Router();
 
-// Create a new Bag for a client
-router.post(
-  '/create/',
-  passport.authenticate('jwt', { session: false }),
-  async (req, res, next) => {
-    try {
-      const { sub } = req.user;
-      const bag = await service.createBag(sub);
-      success(req, res, bag, 200);
-    } catch (error) {
-      next(error);
-    }
-  },
-);
-
 // Get Bag by client ID
 router.get(
   '/',
