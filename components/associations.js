@@ -24,6 +24,7 @@ import {
   Carrito_Detalle,
   CarritoDetalleSchema,
 } from './carrito_detalle/model.js';
+import { Resenia, ReseniaSchema } from './resenia/model.js';
 
 const setupModels = (sequelize) => {
   Pais.init(PaisSchema, Pais.config(sequelize));
@@ -49,6 +50,7 @@ const setupModels = (sequelize) => {
   Pedido_Detalle.init(PedidoDetalleSchema, Pedido_Detalle.config(sequelize));
   Carrito.init(CarritoSchema, Carrito.config(sequelize));
   Carrito_Detalle.init(CarritoDetalleSchema, Carrito_Detalle.config(sequelize));
+  Resenia.init(ReseniaSchema, Resenia.config(sequelize));
 
   Pais.associate(sequelize.models);
   Provincia.associate(sequelize.models);
@@ -67,6 +69,7 @@ const setupModels = (sequelize) => {
   Estado_Pedido.associate(sequelize.models);
   Carrito.associate(sequelize.models);
   Carrito_Detalle.associate(sequelize.models);
+  Resenia.associate(sequelize.models);
 };
 
 export default setupModels;

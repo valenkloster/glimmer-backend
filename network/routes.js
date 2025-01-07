@@ -14,6 +14,7 @@ import favoritos from '../components/favoritos/network.js';
 import cliente_direcciones from '../components/cliente_direccion/network.js';
 import carrito from '../components/carrito/network.js';
 import pedido from '../components/pedido/network.js';
+import resenia from '../components/resenia/network.js'
 
 function routerApi(app) {
   const router = express.Router();
@@ -33,6 +34,7 @@ function routerApi(app) {
   router.use('/cliente_direcciones', cliente_direcciones);
   router.use('/carrito', carrito);
   router.use('/pedidos', pedido);
+  router.use('/resenias', resenia);
 }
 
 export default routerApi;
