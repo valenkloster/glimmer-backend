@@ -1,7 +1,6 @@
 import express from 'express';
 import { success } from '../../network/response.js';
 import passport from 'passport';
-import { checkRoles } from '../../middleware/auth.handler.js';
 
 import ReseniaService from './service.js';
 const service = new ReseniaService();
