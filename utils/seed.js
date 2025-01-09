@@ -151,18 +151,21 @@ const Estado_Pedidos = [
 
 const Users = [
   {
+    id_user: 1,
     email: 'cmendoza@cliente.com',
     password: password,
     role: 'cliente',
     recovery_token: null,
   },
   {
+    id_user: 2,
     email: 'juanlopez@gmail.com',
     password: password,
     role: 'cliente',
     recovery_token: null,
   },
   {
+    id_user: 3,
     email: 'valekloster18@gmail.com',
     password: password,
     role: 'admin',
@@ -172,11 +175,13 @@ const Users = [
 
 const Clientes = [
   {
+    id_cliente: 1,
     nombre: 'Carlos',
     apellido: 'Mendoza',
     id_user: 1,
   },
   {
+    id_cliente: 2,
     nombre: 'Juan',
     apellido: 'Lopez',
     id_user: 2,
@@ -205,6 +210,19 @@ const Cliente_Direcciones = [
   },
 ];
 
+const Carritos = [
+  {
+    fecha: new Date(),
+    monto_total: 16800,
+    id_cliente: 1,
+  },
+  {
+    fecha: new Date(),
+    monto_total: 16800,
+    id_cliente: 2,
+  },
+];
+
 const Carrito_Detalles = [
   {
     id_carrito: 1,
@@ -218,13 +236,17 @@ const Carrito_Detalles = [
     cantidad: 1,
     precio: 7000,
   },
-];
-
-const Carritos = [
   {
-    fecha: new Date(),
-    monto_total: 16800,
-    id_cliente: 1,
+    id_carrito: 2,
+    id_detalle: 1,
+    cantidad: 3,
+    precio: 9800,
+  },
+  {
+    id_carrito: 2,
+    id_detalle: 2,
+    cantidad: 3,
+    precio: 7000,
   },
 ];
 
@@ -244,8 +266,8 @@ async function seed() {
     await sequelize.models.Estado_Pedido.bulkCreate(Estado_Pedidos);
     await sequelize.models.Favoritos.bulkCreate(Favorito);
     await sequelize.models.Cliente_Direccion.bulkCreate(Cliente_Direcciones);
-    await sequelize.models.Carrito_Detalle.bulkCreate(Carrito_Detalles);
     await sequelize.models.Carrito.bulkCreate(Carritos);
+    await sequelize.models.Carrito_Detalle.bulkCreate(Carrito_Detalles);
     console.log('Database seeded 😁');
   } catch (error) {
     console.error(error);
