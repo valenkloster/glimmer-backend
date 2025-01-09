@@ -77,4 +77,14 @@ router.patch(
   },
 );
 
+router.get('/', async (req, res, next) => {
+  try {
+    const { id_detalle } = req.body;
+    const productName = await service.getProductNameByDetail(id_detalle);
+    success(req, res, productName, 200);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;

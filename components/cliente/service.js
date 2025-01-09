@@ -38,7 +38,7 @@ class CustomerService {
       include: ['user'],
     });
     delete newCustomer.dataValues.user.dataValues.password;
-    await carritoService.createCart(newCustomer.id_cliente);
+    await carritoService.createBag(newCustomer.id_cliente);
     return newCustomer;
   }
 

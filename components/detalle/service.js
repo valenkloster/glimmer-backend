@@ -91,6 +91,23 @@ class ProductDetailService {
 
     return detalle.detalle;
   }
+
+  async getProductNameByDetail(id_detalle) {
+    const productoDetalle = await models.Producto_Detalle.findOne({
+      where: { id_detalle },
+    });
+
+    if (!productoDetalle) {
+      throw new Error('Detail not found in Producto_Detalle.');
+    }
+
+    const producto = await product.getById(productoDetalle.id_producto);
+    if (!producto) {
+      throw new Error('Product not found.');
+    }
+
+    return producto.nombre;
+  }
 }
 
 export default ProductDetailService;
