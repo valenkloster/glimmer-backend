@@ -70,8 +70,35 @@ const initialDetails = [
   },
 ];
 
+const initialClientes = [
+  {
+    id_cliente: '1',
+    nombre: 'Valentina',
+    apellido: 'Kloster',
+    user: {
+      email: 'valekloster18@gmail.com',
+      password: 'password123',
+    },
+  },
+  {
+    id_cliente: '2',
+    nombre: 'Patricia',
+    apellido: 'Pelegrin',
+    user: {
+      email: 'patricia_pelegrin@gmail.com',
+      password: '123password',
+    },
+  },
+];
+
 async function databaseDestroy(sequelize) {
   await sequelize.sync({ force: true });
 }
 
-export { initialProducts, initialCategories, initialDetails, databaseDestroy };
+export {
+  initialProducts,
+  initialCategories,
+  initialDetails,
+  initialClientes,
+  databaseDestroy,
+};
