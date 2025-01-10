@@ -1,5 +1,5 @@
 import sequelize from '../libs/sequelize.js';
-import '../components/associations.js';
+import '../api/associations.js';
 
 import bcrypt from 'bcrypt';
 
