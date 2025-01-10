@@ -11,7 +11,6 @@ class CarritoService {
     return bag;
   }
 
-  // Get Bag by client ID
   async getBagByClient(id_cliente) {
     const bag = await models.Carrito.findOne({
       where: { id_cliente },
@@ -23,7 +22,6 @@ class CarritoService {
     return bag;
   }
 
-  // Add a product detail to the bag
   async addProductToBag(id_cliente, id_detalle, cantidad = 1) {
     const detalle = await models.Detalle.findByPk(id_detalle);
     if (!detalle) {
@@ -83,7 +81,6 @@ class CarritoService {
     return bagDetail;
   }
 
-  // Remove a product from the bag
   async removeProductFromBag(id_carrito_detalle) {
     const bagDetail = await models.Carrito_Detalle.findByPk(id_carrito_detalle);
     if (!bagDetail) {
@@ -102,7 +99,6 @@ class CarritoService {
     return bag;
   }
 
-  // Calculate the total price of the bag
   async calculateTotalBagPrice(id_carrito) {
     const bagDetails = await models.Carrito_Detalle.findAll({
       where: { id_carrito },

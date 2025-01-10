@@ -8,7 +8,6 @@ const service = new CarritoService();
 
 const router = express.Router();
 
-// Get Bag by client ID
 router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
@@ -23,7 +22,6 @@ router.get(
   },
 );
 
-// Add a product detail to the Bag
 router.post(
   '/add/',
   passport.authenticate('jwt', { session: false }),
@@ -43,7 +41,6 @@ router.post(
   },
 );
 
-// Update quantity product in the Bag
 router.patch(
   '/update/',
   passport.authenticate('jwt', { session: false }),
@@ -64,7 +61,6 @@ router.patch(
   },
 );
 
-// Remove a product from the Bag
 router.delete(
   '/remove/',
   passport.authenticate('jwt', { session: false }),
