@@ -11,9 +11,7 @@ class ProductService {
     if (!data.codigo) {
       data.codigo = `PROD-${Date.now()}`;
     }
-
     const product = await models.Producto.create(data);
-
     for (const detalle of detalles) {
       const { tono_nombre, tono_color, tamanio, stock, precio } = detalle;
 

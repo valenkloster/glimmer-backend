@@ -8,12 +8,11 @@ const URI = `postgres://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${
 
 const sequelize = new Sequelize(URI, {
   dialect: 'postgres',
-  // logging: (msg) => console.log(msg), // Imprime las queries (Opcional: puedes desactivar en producción)
   logging: false,
 });
 
 setupModels(sequelize); // Configuramos los modelos
 
-sequelize.sync({ alter: true }); // Sincroniza el esquema con la base de datos
+// sequelize.sync({ alter: true }); // Sincroniza el esquema con la base de datos
 
 export default sequelize;

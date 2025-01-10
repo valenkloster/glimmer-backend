@@ -66,8 +66,8 @@ router.get('/:id', async (req, res, next) => {
 
 router.post(
   '/',
-  passport.authenticate('jwt', { session: false }),
-  checkRoles('admin'),
+  // passport.authenticate('jwt', { session: false }),
+  // checkRoles('admin'),
   async (req, res, next) => {
     try {
       const data = req.body;
