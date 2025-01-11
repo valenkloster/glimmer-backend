@@ -6,26 +6,46 @@ import bcrypt from 'bcrypt';
 const password = bcrypt.hashSync('asdasdasd', 10);
 
 const Categorias = [
-  {
-    nombre: 'Maquillaje',
-    descripcion: null,
-    id_categoria_padre: null,
-  },
-  {
-    nombre: 'Skin Care',
-    descripcion: null,
-    id_categoria_padre: null,
-  },
-  {
-    nombre: 'Labiales',
-    descripcion: null,
-    id_categoria_padre: 1,
-  },
-  {
-    nombre: 'Bases',
-    descripcion: null,
-    id_categoria_padre: 1,
-  },
+  { nombre: 'Maquillaje', id_categoria_padre: null },
+  { nombre: 'Cuidado de la piel', id_categoria_padre: null },
+
+  // Subcategorías de Maquillaje
+  { nombre: 'Rostro', id_categoria_padre: 1 },
+  { nombre: 'Bases', id_categoria_padre: 3 },
+  { nombre: 'Correctores', id_categoria_padre: 3 },
+  { nombre: 'Polvos', id_categoria_padre: 3 },
+  { nombre: 'Rubores', id_categoria_padre: 3 },
+  { nombre: 'Iluminadores', id_categoria_padre: 3 },
+  { nombre: 'Primers', id_categoria_padre: 3 },
+  { nombre: 'Contornos', id_categoria_padre: 3 },
+  { nombre: 'Ojos', id_categoria_padre: 1 },
+  { nombre: 'Sombras de ojos', id_categoria_padre: 11 },
+  { nombre: 'Delineadores', id_categoria_padre: 11 },
+  { nombre: 'Máscaras de pestañas', id_categoria_padre: 11 },
+  { nombre: 'Cejas', id_categoria_padre: 11 },
+  { nombre: 'Labios', id_categoria_padre: 1 },
+  { nombre: 'Labiales', id_categoria_padre: 16 },
+  { nombre: 'Brillos labiales', id_categoria_padre: 16 },
+  { nombre: 'Delineadores de labios', id_categoria_padre: 16 },
+
+  // Subcategorías de Cuidado de la piel
+  { nombre: 'Limpieza', id_categoria_padre: 2 },
+  { nombre: 'Limpiadores faciales', id_categoria_padre: 20 },
+  { nombre: 'Desmaquillantes', id_categoria_padre: 20 },
+  { nombre: 'Exfoliantes', id_categoria_padre: 20 },
+  { nombre: 'Hidratación y Cuidado Facial', id_categoria_padre: 2 },
+  { nombre: 'Cremas hidratantes', id_categoria_padre: 24 },
+  { nombre: 'Cremas de noche', id_categoria_padre: 24 },
+  { nombre: 'Aceites faciales', id_categoria_padre: 24 },
+  { nombre: 'Sérums faciales', id_categoria_padre: 24 },
+  { nombre: 'Ojos', id_categoria_padre: 2 },
+  { nombre: 'Cremas para ojos', id_categoria_padre: 29 },
+  { nombre: 'Sérums para ojos', id_categoria_padre: 29 },
+  { nombre: 'Protección solar', id_categoria_padre: 2 },
+  { nombre: 'Protectores solares faciales', id_categoria_padre: 32 },
+  { nombre: 'Cuidado de labios', id_categoria_padre: 2 },
+  { nombre: 'Bálsamos labiales', id_categoria_padre: 34 },
+  { nombre: 'Exfoliantes labiales', id_categoria_padre: 34 },
 ];
 
 const Productos = [
