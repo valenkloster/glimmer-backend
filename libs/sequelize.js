@@ -13,6 +13,6 @@ const sequelize = new Sequelize(URI, {
 
 setupModels(sequelize); // Configuramos los modelos
 
-// sequelize.sync({ alter: true });
+sequelize.sync({ alter: true });
 
 export default sequelize;

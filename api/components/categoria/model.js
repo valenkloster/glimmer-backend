@@ -13,10 +13,6 @@ const CategoriaSchema = {
     type: DataTypes.STRING(100),
     allowNull: false,
   },
-  descripcion: {
-    type: DataTypes.STRING(200),
-    allowNull: true,
-  },
   id_categoria_padre: {
     type: DataTypes.INTEGER,
     allowNull: true,
