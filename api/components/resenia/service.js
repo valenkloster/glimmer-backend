@@ -24,11 +24,20 @@ class ReseniaService {
         include: ['cliente'],
         order: [['fecha', 'DESC']],
       });
-      if (reviews.length === 0) {
-        throw boom.notFound('This product has no reviews');
+      // Si no hay reseñas, lanza un error 404.
+      if (!reviews || reviews.length === 0) {
+        return 'This product has no reviews';
       }
+
       return reviews;
     } catch (error) {
+      // Si el error es un boom error (como `notFound`), lo relanzamos tal cual.
+      if (boom.isBoom(error)) {
+        throw error;
+      }
+
+      // Si es otro tipo de error, asumimos que es un problema interno.
+      console.error('Error fetching reviews:', error); // Debug: Muestra el error real.
       throw boom.badImplementation('Error fetching reviews');
     }
   }
