@@ -46,6 +46,24 @@ const ProductoSchema = {
     type: DataTypes.STRING(255),
     allowNull: false,
   },
+  tamanio: {
+    type: DataTypes.STRING(50),
+    allowNull: true,
+  },
+  stock: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  precio: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,
+    validate: {
+      min: {
+        args: [0],
+        msg: 'El precio no puede ser negativo',
+      },
+    },
+  },
   id_categoria: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -61,16 +79,16 @@ const ProductoSchema = {
 class Producto extends Model {
   static associate(models) {
     this.belongsTo(models.Categoria, { foreignKey: 'id_categoria' });
-    this.hasMany(models.Producto_Detalle, {
-      as: 'detalles',
-      foreignKey: 'id_producto',
-    });
-    this.belongsToMany(models.Detalle, {
-      through: models.Producto_Detalle,
-      as: 'detalles_completos',
-      foreignKey: 'id_producto',
-      otherKey: 'id_detalle',
-    });
+    // this.hasMany(models.Producto_Detalle, {
+    //   as: 'detalles',
+    //   foreignKey: 'id_producto',
+    // });
+    // this.belongsToMany(models.Detalle, {
+    //   through: models.Producto_Detalle,
+    //   as: 'detalles_completos',
+    //   foreignKey: 'id_producto',
+    //   otherKey: 'id_detalle',
+    // });
     this.hasMany(models.Favoritos, {
       as: 'favoritos',
       foreignKey: 'id_producto',

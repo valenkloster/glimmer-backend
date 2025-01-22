@@ -15,7 +15,7 @@ class CustomerService {
   async create(data) {
     let user = await service.getByEmail(data.user.email);
     if (user) {
-      throw boom.conflict('Email must be unique');
+      throw boom.conflict('Email already exists');
     }
     const hash = await bcrypt.hash(data.user.password, 10);
     let uuid;

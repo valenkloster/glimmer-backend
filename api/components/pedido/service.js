@@ -2,35 +2,33 @@ import sequelize from '../../../libs/sequelize.js';
 const { models } = sequelize;
 import boom from '@hapi/boom';
 
-import ProductDetailService from '../detalle/service.js';
-const productDetail = new ProductDetailService();
-
 class PedidoService {
   constructor() {}
 
-  async createOrder(id_cliente, id_cliente_direccion) {
+  async createOrder(id_cliente, id_direccion) {
     const bag = await models.Carrito.findOne({ where: { id_cliente } });
     if (!bag) throw boom.notFound('Bag not found');
 
     const bagDetails = await models.Carrito_Detalle.findAll({
       where: { id_carrito: bag.id_carrito },
-      include: ['detalle'],
+      include: ['producto'],
     });
     if (!bagDetails.length) throw boom.badRequest('Bag is empty');
 
-    if (!id_cliente_direccion) throw boom.badRequest('No address provided');
+    if (!id_direccion) throw boom.badRequest('No address provided');
 
     const outOfStockItems = [];
     const availableItems = [];
+
     for (const item of bagDetails) {
-      const detail = item.detalle;
-      if (detail.stock >= item.cantidad) {
+      const producto = item.producto;
+      if (producto.stock >= item.cantidad) {
         availableItems.push(item);
       } else {
-        const productName = await productDetail.getProductNameByDetail(
-          item.id_detalle,
-        );
-        outOfStockItems.push(productName);
+        // const productName = await product.getProductNameByDetail(
+        //   item.id_producto,
+        // );
+        outOfStockItems.push(item.producto.nombre);
       }
     }
 
@@ -40,23 +38,23 @@ class PedidoService {
 
     const newOrder = await models.Pedido.create({
       id_cliente,
-      id_cliente_direccion,
+      id_direccion,
       monto_total: 0,
       id_estado_pedido: 2,
     });
 
     // Create order details and update stock
     for (const item of availableItems) {
-      const detail = item.detalle;
+      const producto = item.producto;
       await models.Pedido_Detalle.create({
         id_pedido: newOrder.id_pedido,
-        id_detalle: detail.id_detalle,
+        id_producto: producto.id_producto,
         cantidad: item.cantidad,
         precio: item.precio,
       });
 
-      detail.stock -= item.cantidad;
-      await detail.save();
+      producto.stock -= item.cantidad;
+      await producto.save();
     }
 
     newOrder.monto_total = await this.calculateTotalOrderPrice(
@@ -86,7 +84,7 @@ class PedidoService {
       include: [
         {
           association: 'detalles',
-          include: ['detalle'],
+          include: ['producto'],
         },
         { association: 'cliente_direccion' },
         { association: 'estado' },
@@ -100,16 +98,11 @@ class PedidoService {
     const order = await models.Pedido.findByPk(id_pedido, {
       include: [
         {
-          association: 'cliente_direccion',
-          include: ['direccion'], // Aquí incluimos la dirección asociada
-        },
-        {
-          association: 'estado',
-        },
-        {
           association: 'detalles',
-          include: ['detalle'], // Incluye el detalle de los productos
+          include: ['producto'],
         },
+        { association: 'cliente_direccion' },
+        { association: 'estado' },
       ],
     });
     if (!order) throw boom.notFound('Order not found');
@@ -126,15 +119,6 @@ class PedidoService {
     });
     return totalPrice;
   }
-
-  // async updateOrderStatus(id_pedido, id_estado_pedido) {
-  //   const order = await models.Pedido.findByPk(id_pedido);
-  //   if (!order) throw boom.notFound('Order not found');
-
-  //   order.id_estado_pedido = id_estado_pedido;
-  //   await order.save();
-  //   return order;
-  // }
 }
 
 export default PedidoService;

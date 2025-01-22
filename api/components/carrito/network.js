@@ -28,12 +28,12 @@ router.post(
   async (req, res, next) => {
     try {
       const { sub } = req.user;
-      const { id_detalle, cantidad = 1 } = req.body;
+      const { id_producto, cantidad = 1 } = req.body;
 
       if (cantidad <= 0) {
         throw boom.badRequest('Quantity must be greater than zero');
       }
-      await service.addProductToBag(sub, id_detalle, cantidad);
+      await service.addProductToBag(sub, id_producto, cantidad);
       success(req, res, 'Product added', 200);
     } catch (error) {
       next(error);
@@ -46,12 +46,14 @@ router.patch(
   passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
     try {
-      const { id_carrito_detalle, cantidad } = req.body;
+      const { sub } = req.user;
+      const { id_producto, cantidad } = req.body;
       if (cantidad <= 0) {
         throw boom.badRequest('Quantity must be greater than zero');
       }
       const bagDetail = await service.updateProductInBag(
-        id_carrito_detalle,
+        sub,
+        id_producto,
         cantidad,
       );
       success(req, res, bagDetail, 200);
@@ -62,13 +64,13 @@ router.patch(
 );
 
 router.delete(
-  '/remove/',
+  '/remove/:id',
   passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
     try {
-      const { id_carrito_detalle } = req.body;
-      const bag = await service.removeProductFromBag(id_carrito_detalle);
-      success(req, res, bag, 200);
+      const { sub } = req.user;
+      await service.removeProductFromBag(sub, req.params.id);
+      success(req, res, 'Product deleted', 200);
     } catch (error) {
       next(error);
     }

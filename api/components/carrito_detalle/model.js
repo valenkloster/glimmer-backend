@@ -13,7 +13,7 @@ const CarritoDetalleSchema = {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  id_detalle: {
+  id_producto: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
@@ -33,9 +33,9 @@ class Carrito_Detalle extends Model {
       as: 'carrito',
       foreignKey: 'id_carrito',
     });
-    this.belongsTo(models.Detalle, {
-      as: 'detalle',
-      foreignKey: 'id_detalle',
+    this.belongsTo(models.Producto, {
+      as: 'producto',
+      foreignKey: 'id_producto',
     });
   }
 

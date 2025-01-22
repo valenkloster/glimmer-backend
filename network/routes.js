@@ -9,7 +9,6 @@ import cliente from '../api/components/cliente/network.js';
 import auth from '../api/components/auth/network.js';
 import categoria from '../api/components/categoria/network.js';
 import producto from '../api/components/producto/network.js';
-import detalle from '../api/components/detalle/network.js';
 import favoritos from '../api/components/favoritos/network.js';
 import cliente_direcciones from '../api/components/cliente_direccion/network.js';
 import carrito from '../api/components/carrito/network.js';
@@ -29,7 +28,6 @@ function routerApi(app) {
   router.use('/auth', auth);
   router.use('/categorias', categoria);
   router.use('/productos', producto);
-  router.use('/detalles', detalle);
   router.use('/favoritos', favoritos);
   router.use('/cliente_direcciones', cliente_direcciones);
   router.use('/carrito', carrito);

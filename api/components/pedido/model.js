@@ -22,7 +22,7 @@ const PedidoSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  id_cliente_direccion: {
+  id_direccion: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
@@ -38,9 +38,9 @@ class Pedido extends Model {
       as: 'cliente',
       foreignKey: 'id_cliente',
     });
-    this.belongsTo(models.Cliente_Direccion, {
+    this.belongsTo(models.Direccion, {
       as: 'cliente_direccion',
-      foreignKey: 'id_cliente_direccion',
+      foreignKey: 'id_direccion',
     });
     this.belongsTo(models.Estado_Pedido, {
       as: 'estado',

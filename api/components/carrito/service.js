@@ -22,9 +22,9 @@ class CarritoService {
     return bag;
   }
 
-  async addProductToBag(id_cliente, id_detalle, cantidad = 1) {
-    const detalle = await models.Detalle.findByPk(id_detalle);
-    if (!detalle) {
+  async addProductToBag(id_cliente, id_producto, cantidad = 1) {
+    const product = await models.Producto.findByPk(id_producto);
+    if (!product) {
       throw boom.notFound('Product detail not found');
     }
     const bag = await this.getBagByClient(id_cliente);
@@ -34,18 +34,18 @@ class CarritoService {
     const id_carrito = bag.id_carrito;
 
     const existingDetail = await models.Carrito_Detalle.findOne({
-      where: { id_carrito, id_detalle },
+      where: { id_carrito, id_producto },
     });
     if (existingDetail) {
       existingDetail.cantidad += cantidad;
-      existingDetail.precio = detalle.precio * existingDetail.cantidad;
+      existingDetail.precio = product.precio * existingDetail.cantidad;
       await existingDetail.save();
     } else {
       await models.Carrito_Detalle.create({
         id_carrito,
-        id_detalle,
+        id_producto,
         cantidad,
-        precio: detalle.precio * cantidad,
+        precio: product.precio * cantidad,
       });
     }
 
@@ -54,42 +54,52 @@ class CarritoService {
   }
 
   // Update product in the bag (quantity)
-  async updateProductInBag(id_carrito_detalle, cantidad) {
-    const bagDetail = await models.Carrito_Detalle.findByPk(id_carrito_detalle);
-    if (!bagDetail) {
-      throw boom.notFound('Bag detail not found');
+  async updateProductInBag(id_cliente, id_producto, cantidad) {
+    const bag = await this.getBagByClient(id_cliente);
+    if (!bag) {
+      throw boom.notFound('Bag not found');
     }
 
-    const detalle = await models.Detalle.findByPk(bagDetail.id_detalle);
-    if (!detalle) {
-      throw boom.notFound('Product detail not found');
+    const bagDetail = await models.Carrito_Detalle.findOne({
+      where: {
+        id_producto: id_producto,
+        id_carrito: bag.id_carrito,
+      },
+    });
+    if (!bagDetail) {
+      throw boom.notFound('Product not found');
+    }
+
+    const product = await models.Producto.findByPk(bagDetail.id_producto);
+    if (!product) {
+      throw boom.notFound('Product not found');
     }
 
     // Recalculate the price based on the new quantity
-    const precio = detalle.precio * cantidad;
+    const precio = product.precio * cantidad;
     bagDetail.cantidad = cantidad;
     bagDetail.precio = precio;
     await bagDetail.save();
 
-    // Update the total price of the Bag
-    const bag = await models.Carrito.findByPk(bagDetail.id_carrito);
-    if (!bag) {
-      throw boom.notFound('Bag not found');
-    }
     bag.monto_total = await this.calculateTotalBagPrice(bag.id_carrito);
     await bag.save();
     return bagDetail;
   }
 
-  async removeProductFromBag(id_carrito_detalle) {
-    const bagDetail = await models.Carrito_Detalle.findByPk(id_carrito_detalle);
-    if (!bagDetail) {
-      throw boom.notFound('Bag detail not found');
-    }
-
-    const bag = await models.Carrito.findByPk(bagDetail.id_carrito);
+  async removeProductFromBag(id_cliente, id_producto) {
+    const bag = await this.getBagByClient(id_cliente);
     if (!bag) {
       throw boom.notFound('Bag not found');
+    }
+
+    const bagDetail = await models.Carrito_Detalle.findOne({
+      where: {
+        id_producto: id_producto,
+        id_carrito: bag.id_carrito,
+      },
+    });
+    if (!bagDetail) {
+      throw boom.notFound('Product not found');
     }
 
     bag.monto_total -= bagDetail.precio;

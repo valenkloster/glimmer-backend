@@ -64,28 +64,15 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.post(
-  '/',
-  // passport.authenticate('jwt', { session: false }),
-  // checkRoles('admin'),
-  async (req, res, next) => {
-    try {
-      const data = req.body;
-      if (!data.detalles || !Array.isArray(data.detalles)) {
-        return res.status(400).json({
-          error: true,
-          message:
-            'Detalles deben ser un array que contenga tamaño, stock y tonos.',
-        });
-      }
-
-      const newProduct = await service.createWithDetails(data);
-      success(req, res, newProduct, 201);
-    } catch (error) {
-      next(error);
-    }
-  },
-);
+router.post('/', async (req, res, next) => {
+  try {
+    const data = req.body;
+    const newProduct = await service.create(data);
+    success(req, res, newProduct, 201);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // router.patch(
 //   '/:id',

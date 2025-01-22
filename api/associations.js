@@ -9,12 +9,7 @@ import {
 import { User, UserSchema } from './components/user/model.js';
 import { Cliente, ClienteSchema } from './components/cliente/model.js';
 import { Categoria, CategoriaSchema } from './components/categoria/model.js';
-import { Detalle, DetalleSchema } from './components/detalle/model.js';
 import { Producto, ProductoSchema } from './components/producto/model.js';
-import {
-  Producto_Detalle,
-  ProductoDetalleSchema,
-} from './components/producto_detalle/model.js';
 import { Favoritos, FavoritosSchema } from './components/favoritos/model.js';
 import {
   Cliente_Direccion,
@@ -41,12 +36,7 @@ const setupModels = (sequelize) => {
   User.init(UserSchema, User.config(sequelize));
   Cliente.init(ClienteSchema, Cliente.config(sequelize));
   Categoria.init(CategoriaSchema, Categoria.config(sequelize));
-  Detalle.init(DetalleSchema, Detalle.config(sequelize));
   Producto.init(ProductoSchema, Producto.config(sequelize));
-  Producto_Detalle.init(
-    ProductoDetalleSchema,
-    Producto_Detalle.config(sequelize),
-  );
   Favoritos.init(FavoritosSchema, Favoritos.config(sequelize));
   Cliente_Direccion.init(
     ClienteDireccionSchema,
@@ -65,9 +55,7 @@ const setupModels = (sequelize) => {
   User.associate(sequelize.models);
   Cliente.associate(sequelize.models);
   Categoria.associate(sequelize.models);
-  Detalle.associate(sequelize.models);
   Producto.associate(sequelize.models);
-  Producto_Detalle.associate(sequelize.models);
   Favoritos.associate(sequelize.models);
   Cliente_Direccion.associate(sequelize.models);
   Pedido.associate(sequelize.models);

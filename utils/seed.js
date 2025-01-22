@@ -6,104 +6,420 @@ import bcrypt from 'bcrypt';
 const password = bcrypt.hashSync('asdasdasd', 10);
 
 const Categorias = [
-  { nombre: 'Maquillaje', id_categoria_padre: null },
-  { nombre: 'Cuidado de la piel', id_categoria_padre: null },
-
-  // Subcategorías de Maquillaje
-  { nombre: 'Rostro', id_categoria_padre: 1 },
-  { nombre: 'Bases', id_categoria_padre: 3 },
-  { nombre: 'Correctores', id_categoria_padre: 3 },
-  { nombre: 'Polvos', id_categoria_padre: 3 },
-  { nombre: 'Rubores', id_categoria_padre: 3 },
-  { nombre: 'Iluminadores', id_categoria_padre: 3 },
-  { nombre: 'Primers', id_categoria_padre: 3 },
-  { nombre: 'Contornos', id_categoria_padre: 3 },
-  { nombre: 'Ojos', id_categoria_padre: 1 },
-  { nombre: 'Sombras de ojos', id_categoria_padre: 11 },
-  { nombre: 'Delineadores', id_categoria_padre: 11 },
-  { nombre: 'Máscaras de pestañas', id_categoria_padre: 11 },
-  { nombre: 'Cejas', id_categoria_padre: 11 },
-  { nombre: 'Labios', id_categoria_padre: 1 },
-  { nombre: 'Labiales', id_categoria_padre: 16 },
-  { nombre: 'Brillos labiales', id_categoria_padre: 16 },
-  { nombre: 'Delineadores de labios', id_categoria_padre: 16 },
-
-  // Subcategorías de Cuidado de la piel
-  { nombre: 'Limpieza', id_categoria_padre: 2 },
-  { nombre: 'Limpiadores faciales', id_categoria_padre: 20 },
-  { nombre: 'Desmaquillantes', id_categoria_padre: 20 },
-  { nombre: 'Exfoliantes', id_categoria_padre: 20 },
-  { nombre: 'Hidratación y Cuidado Facial', id_categoria_padre: 2 },
-  { nombre: 'Cremas hidratantes', id_categoria_padre: 24 },
-  { nombre: 'Cremas de noche', id_categoria_padre: 24 },
-  { nombre: 'Aceites faciales', id_categoria_padre: 24 },
-  { nombre: 'Sérums faciales', id_categoria_padre: 24 },
-  { nombre: 'Ojos', id_categoria_padre: 2 },
-  { nombre: 'Cremas para ojos', id_categoria_padre: 29 },
-  { nombre: 'Sérums para ojos', id_categoria_padre: 29 },
-  { nombre: 'Protección solar', id_categoria_padre: 2 },
-  { nombre: 'Protectores solares faciales', id_categoria_padre: 32 },
-  { nombre: 'Cuidado de labios', id_categoria_padre: 2 },
-  { nombre: 'Bálsamos labiales', id_categoria_padre: 34 },
-  { nombre: 'Exfoliantes labiales', id_categoria_padre: 34 },
+  { nombre: 'Limpieza', id_categoria_padre: null },
+  { nombre: 'Limpiadores Faciales', id_categoria_padre: 1 },
+  { nombre: 'Desmaquillantes', id_categoria_padre: 1 },
+  { nombre: 'Exfoliantes', id_categoria_padre: 1 },
+  { nombre: 'Hidratación y Cuidado Facial', id_categoria_padre: null },
+  { nombre: 'Cremas Hidratantes', id_categoria_padre: 5 },
+  { nombre: 'Cremas de Noche', id_categoria_padre: 5 },
+  { nombre: 'Aceites Faciales', id_categoria_padre: 5 },
+  { nombre: 'Cuidado de Ojos', id_categoria_padre: null },
+  { nombre: 'Cremas para Ojos', id_categoria_padre: 9 },
+  { nombre: 'Sérums para Ojos', id_categoria_padre: 9 },
+  { nombre: 'Protección solar', id_categoria_padre: null },
+  { nombre: 'Protectores Solares Faciales', id_categoria_padre: 12 },
+  { nombre: 'Cuidado de Labios', id_categoria_padre: null },
+  { nombre: 'Bálsamos Labiales', id_categoria_padre: 14 },
+  { nombre: 'Exfoliantes Labiales', id_categoria_padre: 14 },
 ];
 
 const Productos = [
   {
-    codigo: '123456',
-    nombre: 'Base de maquillaje Airbrush Flawless de larga duración',
-    marca: 'Charlotte Tilbury',
+    codigo: '2606220',
+    nombre: 'Limpiador Facial Espumoso con Glucósidos',
+    marca: 'The Ordinary',
     descripcion:
-      'La base Airbrush Flawless Foundation de Charlotte es duradera, ligera y un híbrido entre base y cuidado de la piel: el secreto para una tez perfecta, sin poros y segura de sí misma.',
-    imagen: 'http://media.ulta.com/i/ulta/2624531?w=1080&h=1080&fmt=auto',
+      'El limpiador facial espumoso con glucósido de The Ordinary es un limpiador espumoso suave que limpia la piel de manera eficaz al tiempo que mantiene la barrera de humedad de la piel.',
+    imagen: 'https://media.ulta.com/i/ulta/2606220?w=1080&h=1080&fmt=auto',
+    tamanio: '5,0 oz',
+    stock: 150,
+    precio: 15000,
+    id_categoria: 2,
+  },
+  {
+    codigo: '2551159',
+    nombre: 'Limpiador de Escualano para Pieles Secas',
+    marca: 'The Ordinary',
+    descripcion:
+      'El limpiador Squalane para piel seca de The Ordinary es un producto de limpieza suave formulado para eliminar el maquillaje y dejar la piel suave e hidratada.',
+    imagen: 'https://media.ulta.com/i/ulta/2551159?w=1080&h=1080&fmt=auto',
+    tamanio: '5,0 oz',
+    stock: 150,
+    precio: 12500,
+    id_categoria: 2,
+  },
+  {
+    codigo: '2538071',
+    nombre: 'Limpiador Hidratante de Leche de Cabra',
+    marca: 'Kate Somerville',
+    descripcion:
+      'El limpiador humectante de leche de cabra de Kate Somerville es un limpiador diario suave, cremoso y sin espuma, que está clínicamente formulado con leche de cabra para limpiar y calmar sin dejar tirantez ni irritación.',
+    imagen: 'https://media.ulta.com/i/ulta/2538071?w=1080&h=1080&fmt=auto',
+    tamanio: '4,0 oz',
+    stock: 150,
+    precio: 54000,
+    id_categoria: 2,
+  },
+  {
+    codigo: '2533942',
+    nombre: 'Bálsamo Limpiador Pro-Colágeno',
+    marca: 'ELEMIES',
+    descripcion:
+      'El bálsamo limpiador Pro-Collagen de ELEMIS es un limpiador fundente 3 en 1 que elimina fácilmente el maquillaje, los contaminantes visibles diarios y las impurezas para una tez suave y radiante.',
+    imagen: 'https://media.ulta.com/i/ulta/2533942?w=1080&h=1080&fmt=auto',
+    tamanio: '3,5 oz',
+    stock: 150,
+    precio: 82500,
+    id_categoria: 3,
+  },
+  {
+    codigo: '2597415',
+    nombre: 'Limpiador Desmaquillante con Aceite de Jojoba',
+    marca: 'CeraVe',
+    descripcion:
+      'El bálsamo limpiador desmaquillante CeraVe con aceite de jojoba para todo tipo de pieles tiene una fórmula única de bálsamo fundente que disuelve eficazmente el maquillaje más duradero. Hidrata la piel y la deja con una sensación reconfortante.',
+    imagen: 'https://media.ulta.com/i/ulta/2597415?w=1080&h=1080&fmt=auto',
+    tamanio: '1,3 oz',
+    stock: 150,
+    precio: 16700,
+    id_categoria: 3,
+  },
+  {
+    codigo: '2597588',
+    nombre: 'Limpiador Espumoso Cosmic Dew',
+    marca: 'good light',
+    descripcion:
+      'El limpiador en gel a espuma Cosmic Dew de Good Light es un limpiador celestial en gel a espuma que elimina suavemente toda la suciedad, las impurezas y el maquillaje, dejando un brillo equilibrado, saludable y de otro mundo.',
+    imagen: 'https://media.ulta.com/i/ulta/2597588?w=1080&h=1080&fmt=auto',
+    tamanio: '3,3 oz',
+    stock: 150,
+    precio: 21600,
+    id_categoria: 3,
+  },
+  {
+    codigo: '2582313',
+    nombre: 'Polvo Exfoliante de Piña',
+    marca: 'Good Molecules',
+    descripcion:
+      'Exfolia suavemente la piel muerta y la opacidad con el polvo exfoliante de piña de Good Molecules.',
+    imagen: 'https://media.ulta.com/i/ulta/2582313?w=1080&h=1080&fmt=auto',
+    tamanio: '2,1 oz',
+    stock: 150,
+    precio: 19200,
     id_categoria: 4,
   },
   {
-    codigo: '654321',
-    nombre: 'Labial líquido mate',
-    marca: 'MAC',
-    descripcion: 'Labial líquido mate de larga duración.',
-    imagen: 'http://media.ulta.com/i/ulta/2624531?w=1080&h=1080&fmt=auto',
-    id_categoria: 3,
+    codigo: '2582310',
+    nombre: 'Tratamiento Exfoliante Nocturno',
+    marca: 'Good Molecules',
+    descripcion:
+      'Revitalice y renueve la piel durante la noche con el tratamiento exfoliante nocturno AHA y BHA de Good Molecules.',
+    imagen: 'https://media.ulta.com/i/ulta/2582310?w=1080&h=1080&fmt=auto',
+    tamanio: '1,0 oz',
+    stock: 150,
+    precio: 7200,
+    id_categoria: 4,
   },
-];
-
-const Detalles = [
   {
-    tono_nombre: 'Frío',
-    tono_color: '#F4E1D2',
+    codigo: '2152621',
+    nombre: 'Exfoliante Microfoliante Diario',
+    marca: 'Dermalógica',
+    descripcion:
+      'Consiga una piel más luminosa y suave con el exfoliante microfoliante diario de Dermalogica. Este exfoliante facial en polvo, potente pero suave, es un icónico polvo enzimático que se activa al entrar en contacto con el agua y ayuda a unificar el tono de la piel, eliminar las imperfecciones y reducir la apariencia de los poros.',
+    imagen: 'https://media.ulta.com/i/ulta/2152621?w=1080&h=1080&fmt=auto',
+    tamanio: '2,6 oz',
+    stock: 150,
+    precio: 79200,
+    id_categoria: 4,
+  },
+  {
+    codigo: '2552295',
+    nombre: 'Humectante diario Natural Moisturizing Factors + HA',
+    marca: 'The Ordinary',
+    descripcion:
+      'El humectante diario Natural Moisturizing Factors + HA de The Ordinary es una fórmula de hidratación superficial con ácido hialurónico, triglicéridos, ceramidas y otros componentes. Esta crema liviana y no grasosa es ideal para quienes buscan una solución para los signos de deshidratación.',
+    imagen: 'https://media.ulta.com/i/ulta/2552295?w=1080&h=1080&fmt=auto',
+    tamanio: '1,0 oz',
+    stock: 150,
+    precio: 8000,
+    id_categoria: 6,
+  },
+  {
+    codigo: '2588434',
+    nombre: 'Crema Hidratante con Polipéptidos',
+    marca: 'Drunk Elephant',
+    descripcion:
+      'El humectante diario Natural Moisturizing Factors + HA de The Ordinary es una fórmula de hidratación superficial con ácido hialurónico, triglicéridos, ceramidas y otros componentes. Esta crema liviana y no grasosa es ideal para quienes buscan una solución para los signos de deshidratación.',
+    imagen: 'https://media.ulta.com/i/ulta/2588434?w=1080&h=1080&fmt=auto',
+    tamanio: '1,6 oz',
+    stock: 150,
+    precio: 82800,
+    id_categoria: 6,
+  },
+  {
+    codigo: '2620943',
+    nombre: 'Hidratante Multi-Active con Niacinamida',
+    marca: 'Clarins',
+    descripcion:
+      'El humectante de día multiactivo para líneas, poros y brillo con niacinamida de Clarins ataca los primeros signos del envejecimiento para suavizar visiblemente las líneas, refinar los poros y ayudar a fortalecer la barrera de humedad para un brillo saludable.',
+    imagen: 'https://media.ulta.com/i/ulta/2620943?w=1080&h=1080&fmt=auto',
+    tamanio: '1,7 oz',
+    stock: 150,
+    precio: 72000,
+    id_categoria: 6,
+  },
+  {
+    codigo: '2626910',
+    nombre: 'Crema de Noche Super-C con Vitamina C',
+    marca: 'StriVectin',
+    descripcion:
+      'La crema de noche Super-C ilumina la piel en solo 7 noches, según una evaluación de calificación realizada por expertos.',
+    imagen: 'https://media.ulta.com/i/ulta/2626910?w=1080&h=1080&fmt=auto',
+    tamanio: '1,7 oz',
+    stock: 150,
+    precio: 82800,
+    id_categoria: 7,
+  },
+  {
+    codigo: '2290399',
+    nombre: 'Crema Nocturna Ultimate Miracle Worker con Retinol',
+    marca: 'Philosophy',
+    descripcion:
+      'Ultimate Miracle Worker combina el poder de un suero con los beneficios nutritivos de una crema para atacar eficazmente los principales signos del envejecimiento durante la noche.',
+    imagen: 'https://media.ulta.com/i/ulta/2290399?w=1080&h=1080&fmt=auto',
+    tamanio: '2,0 oz',
+    stock: 150,
+    precio: 90500,
+    id_categoria: 7,
+  },
+  {
+    codigo: '2619315',
+    nombre: 'Humectante Magic Cream con Ácido Hialurónico',
+    marca: 'Charlotte Tilbury',
+    descripcion:
+      'El humectante Magic Cream con ácido hialurónico de Charlotte Tilbury es un humectante que desafía visiblemente el envejecimiento con ácido hialurónico para dar volumen a la piel y disminuir la apariencia de las arrugas, dejando su cutis visiblemente radiante y preparado para un maquillaje impecable.',
+    imagen: 'https://media.ulta.com/i/ulta/2619315?w=1080&h=1080&fmt=auto',
+    tamanio: '1,7 oz',
+    stock: 150,
+    precio: 120000,
+    id_categoria: 7,
+  },
+  {
+    codigo: '2588442',
+    nombre: 'Aceite Facial Virgin Marula',
+    marca: 'Drunk Elephant',
+    descripcion:
+      'El aceite de marula virgen de Drunk Elephant es como un tratamiento de rehabilitación para la piel. Rico en antioxidantes esenciales y omega 6 y 9, el aceite de marula nutre y equilibra a la vez que restaura el brillo juvenil y se mantiene en su forma más pura.',
+    imagen: 'https://media.ulta.com/i/ulta/2588442?w=1080&h=1080&fmt=auto',
+    tamanio: '1,0 oz',
+    stock: 150,
+    precio: 82800,
+    id_categoria: 8,
+  },
+  {
+    codigo: '2551162',
+    nombre: 'Aceite de semilla de Rosa Mosqueta',
+    marca: 'The Ordinary',
+    descripcion:
+      'El aceite de semilla de rosa mosqueta prensado en frío 100% orgánico de The Ordinary para pieles envejecidas es una fórmula de apoyo diario ideal para quienes buscan soluciones para los signos del envejecimiento al tiempo que brinda beneficios para la hidratación de la piel y el apoyo de la función de barrera.',
+    imagen: 'https://media.ulta.com/i/ulta/2551162?w=1080&h=1080&fmt=auto',
+    tamanio: '1,0 oz',
+    stock: 150,
+    precio: 12000,
+    id_categoria: 8,
+  },
+  {
+    codigo: '2255970',
+    nombre: 'Aceite Facial contra Cicatrices y Estrías',
+    marca: 'Bio-Oil',
+    descripcion:
+      'El aceite para el cuidado de la piel Bio-Oil reduce la apariencia de estrías, cicatrices y otras marcas debidas a cirugías, lesiones, acné, envejecimiento, embarazo y más.',
+    imagen: 'https://media.ulta.com/i/ulta/2551162?w=1080&h=1080&fmt=auto',
+    tamanio: '6.7 oz',
+    stock: 150,
+    precio: 42000,
+    id_categoria: 8,
+  },
+  {
+    codigo: '2583419',
+    nombre: 'Crema para Ojos Advanced Génifique',
+    marca: 'Lancôme',
+    descripcion:
+      'La crema para ojos antiarrugas y ojeras Advanced Génifique de Lancôme suaviza instantáneamente las líneas finas y trata las arrugas y ojeras con el tiempo para lograr ojos visiblemente más brillantes.',
+    imagen: 'https://media.ulta.com/i/ulta/2583419?w=1080&h=1080&fmt=auto',
     tamanio: '1.0 oz',
-    stock: 50,
-    precio: 4900,
+    stock: 150,
+    precio: 90560,
+    id_categoria: 10,
   },
   {
-    tono_nombre: 'Neutro',
-    tono_color: '#F5DEC9',
-    tamanio: '2.0 oz',
-    stock: 50,
-    precio: 7000,
+    codigo: '2582488',
+    nombre: 'Crema Revitalizante para Ojos',
+    marca: 'cocokind',
+    descripcion:
+      'La crema revitalizante para ojos de Cocokind hidrata, refresca y reduce la apariencia de las ojeras y la hinchazón. Tiene una punta de metal refrescante y calmante.',
+    imagen: 'https://media.ulta.com/i/ulta/2582488?w=1080&h=1080&fmt=auto',
+    tamanio: '0.5 oz',
+    stock: 150,
+    precio: 22800,
+    id_categoria: 10,
   },
   {
-    tono_nombre: null,
-    tono_color: null,
-    tamanio: '2.0 oz',
-    stock: 50,
-    precio: 3000,
-  },
-];
-
-const Producto_Detalles = [
-  {
-    id_producto: 1,
-    id_detalle: 1,
+    codigo: '2634181',
+    nombre: 'Crema para Ojos de Silk Peony',
+    marca: 'TATCHA',
+    descripcion:
+      'La crema suavizante de líneas para ojos The Silk Peony de TATCHA es una crema avanzada para ojos que reafirma y reduce visiblemente la apariencia de las arrugas en toda el área orbital para lograr un alisado de 360° y una mejor aplicación del maquillaje.',
+    imagen: 'https://media.ulta.com/i/ulta/2634181?w=1080&h=1080&fmt=auto',
+    tamanio: '0.5 oz',
+    stock: 150,
+    precio: 73000,
+    id_categoria: 10,
   },
   {
-    id_producto: 1,
-    id_detalle: 2,
+    codigo: '2606218',
+    nombre: 'Serum Antienvejecimiento Multi-Peptide',
+    marca: 'The Ordinary',
+    descripcion:
+      'El serum antienvejecimiento para ojos Multi-Peptide de The Ordinary es un serum para ojos a base de agua que contiene múltiples tecnologías de péptidos que se enfocan en los signos comunes del envejecimiento asociados con el contorno de los ojos, incluida la reducción de la apariencia de patas de gallo, hinchazón, ojeras y bolsas debajo de los ojos.',
+    imagen: 'https://media.ulta.com/i/ulta/2606218?w=1080&h=1080&fmt=auto',
+    tamanio: '0.5 oz',
+    stock: 150,
+    precio: 30000,
+    id_categoria: 11,
   },
   {
-    id_producto: 2,
-    id_detalle: 3,
+    codigo: '2592792',
+    nombre: 'Serum para Ojos Double-Serum',
+    marca: 'Clarins',
+    descripcion:
+      'Double-Serum es una fórmula dos en uno con 13 extractos de plantas que se combinan en un poderoso tratamiento para ojos para suavizar, reafirmar e hidratar visiblemente para una mirada de apariencia más juvenil en solo 7 días.',
+    imagen: 'https://media.ulta.com/i/ulta/2592792?w=1080&h=1080&fmt=auto',
+    tamanio: '0.6 oz',
+    stock: 150,
+    precio: 96000,
+    id_categoria: 11,
+  },
+  {
+    codigo: '2218329',
+    nombre: 'Serum para Ojos All About Eyes',
+    marca: 'Clinique',
+    descripcion:
+      'Clinique All About Eyes Serum es un roll-on que refresca instantáneamente el área de los ojos al contacto.',
+    imagen: 'https://media.ulta.com/i/ulta/2218329?w=1080&h=1080&fmt=auto',
+    tamanio: '0.3 oz',
+    stock: 150,
+    precio: 32500,
+    id_categoria: 11,
+  },
+  {
+    codigo: '2617292',
+    nombre: 'Serum Protector Solar Better Screen UV FPS 50+',
+    marca: 'Kiehl',
+    descripcion:
+      'El serum protector solar Better Screen UV es un serum liviano con péptidos de colágeno que ayudan a proteger contra el daño solar y ayudan a corregir visiblemente los primeros signos del envejecimiento.',
+    imagen: 'https://media.ulta.com/i/ulta/2617292?w=1080&h=1080&fmt=auto',
+    tamanio: '1.7 oz',
+    stock: 150,
+    precio: 54000,
+    id_categoria: 13,
+  },
+  {
+    codigo: '2577186',
+    nombre: 'Protector Solar Humectante FPS 30',
+    marca: 'Black Girl Sunscreen',
+    descripcion:
+      'La loción protectora solar humectante Black Girl Sunscreen SPF 30 protege contra los dañinos rayos UVA y UVB mediante una fórmula exclusiva y transparente.',
+    imagen: 'https://media.ulta.com/i/ulta/2577186?w=1080&h=1080&fmt=auto',
+    tamanio: '3.0 oz',
+    stock: 150,
+    precio: 19200,
+    id_categoria: 13,
+  },
+  {
+    codigo: '2576053',
+    nombre: 'Protector Solar en Barra FPS 50+',
+    marca: 'Shiseido',
+    descripcion:
+      'El protector solar en barra 50+ de Shiseido es un protector solar en barra transparente con FPS 50+ de amplio espectro que se puede volver a aplicar en cualquier momento y en cualquier lugar, encima o debajo del maquillaje.',
+    imagen: 'https://media.ulta.com/i/ulta/2576053?w=1080&h=1080&fmt=auto',
+    tamanio: '0.7 oz',
+    stock: 150,
+    precio: 39000,
+    id_categoria: 13,
+  },
+  {
+    codigo: '2620529',
+    nombre: 'Manteca para Labios',
+    marca: 'KYLIE COSMETICS',
+    descripcion:
+      'KYLIE SKIN Lip Butter es un bálsamo labial ultrahidratante y protector de barrera con una fórmula para el cuidado de los labios para lograr unos labios con un aspecto saludable y voluminoso.',
+    imagen: 'https://media.ulta.com/i/ulta/2620529?w=1080&h=1080&fmt=auto',
+    tamanio: '0.35 oz',
+    stock: 150,
+    precio: 24000,
+    id_categoria: 15,
+  },
+  {
+    codigo: '2620636',
+    nombre: 'Bálsamo Labial Polite Pout',
+    marca: 'Polite Society',
+    descripcion:
+      'El bálsamo labial brillante Polite Pout de Polite Society alivia y calma los labios secos al tiempo que proporciona una explosión de color jugoso con sabores deliciosos y adictivos.',
+    imagen: 'https://media.ulta.com/i/ulta/2620636?w=1080&h=1080&fmt=auto',
+    tamanio: '0.5 oz',
+    stock: 150,
+    precio: 25200,
+    id_categoria: 15,
+  },
+  {
+    codigo: '2617221',
+    nombre: 'Hidratante para Labios con Péptidos',
+    marca: 'OLEHENRIKSEN',
+    descripcion:
+      'El tratamiento labial hidratante con péptidos Pout Preserve de OLEHENRIKSEN es un tratamiento labial avanzado con péptidos que apoyan la piel y manteca de kokum que rellena los labios de forma rápida y visible con hidratación y suaviza las líneas finas.',
+    imagen: 'https://media.ulta.com/i/ulta/2617221?w=1080&h=1080&fmt=auto',
+    tamanio: '0.4 oz',
+    stock: 150,
+    precio: 26400,
+    id_categoria: 15,
+  },
+  {
+    codigo: '2613493',
+    nombre: 'Exfoliante para Labios con Efecto Azucarado',
+    marca: 'fresh',
+    descripcion:
+      'El exfoliante labial Fresh Sugar Lip Polish es un exfoliante labial hidratante que pule y suaviza suavemente los labios secos y escamosos al mismo tiempo que mantiene la humedad, lo que lo convierte en un paso de preparación esencial para cualquier color de labios.',
+    imagen: 'https://media.ulta.com/i/ulta/2613493?w=1080&h=1080&fmt=auto',
+    tamanio: '0.35 oz',
+    stock: 150,
+    precio: 23500,
+    id_categoria: 16,
+  },
+  {
+    codigo: '2603659',
+    nombre: 'Exfoliante para Labios Buff & Blur',
+    marca: 'Stila',
+    descripcion:
+      'El exfoliante enzimático para labios Buff & Blur de Stila es un innovador exfoliante de labios que pule y exfolia suavemente la piel seca para estimular la renovación de nuevas células cutáneas.',
+    imagen: 'https://media.ulta.com/i/ulta/2603659?w=1080&h=1080&fmt=auto',
+    tamanio: '0.35 oz',
+    stock: 150,
+    precio: 22700,
+    id_categoria: 16,
+  },
+  {
+    codigo: '2611153',
+    nombre: 'Exfoliante de Labios',
+    marca: 'e.l.f. Cosmetics',
+    descripcion:
+      'El exfoliante de azúcar para labios Lip Exfoliator de elf Cosmetics es aún más dulce, con una fórmula mejorada y deliciosos aromas. Elimina la piel seca y muerta de tus labios e imprégnalos con aceites para lograr una sensación suave y agradable. Con los labios exfoliados, tu lápiz labial se deslizará con facilidad.',
+    imagen: 'https://media.ulta.com/i/ulta/2611153?w=1080&h=1080&fmt=auto',
+    tamanio: '0.1 oz',
+    stock: 150,
+    precio: 10000,
+    id_categoria: 16,
   },
 ];
 
@@ -114,45 +430,61 @@ const Paises = [
 ];
 
 const Provincias = [
-  {
-    nombre: 'Buenos Aires',
-    id_pais: 1,
-  },
-  {
-    nombre: 'Córdoba',
-    id_pais: 1,
-  },
+  { nombre: 'Buenos Aires', id_pais: 1 },
+  { nombre: 'CABA', id_pais: 1 },
+  { nombre: 'Catamarca', id_pais: 1 },
+  { nombre: 'Chaco', id_pais: 1 },
+  { nombre: 'Chubut', id_pais: 1 },
+  { nombre: 'Córdoba', id_pais: 1 },
+  { nombre: 'Corrientes', id_pais: 1 },
+  { nombre: 'Entre Ríos', id_pais: 1 },
+  { nombre: 'Formosa', id_pais: 1 },
+  { nombre: 'Jujuy', id_pais: 1 },
+  { nombre: 'La Pampa', id_pais: 1 },
+  { nombre: 'La Rioja', id_pais: 1 },
+  { nombre: 'Mendoza', id_pais: 1 },
+  { nombre: 'Misiones', id_pais: 1 },
+  { nombre: 'Neuquén', id_pais: 1 },
+  { nombre: 'Río Negro', id_pais: 1 },
+  { nombre: 'Salta', id_pais: 1 },
+  { nombre: 'San Juan', id_pais: 1 },
+  { nombre: 'San Luis', id_pais: 1 },
+  { nombre: 'Santa Cruz', id_pais: 1 },
+  { nombre: 'Santa Fe', id_pais: 1 },
+  { nombre: 'Santiago del Estero', id_pais: 1 },
+  { nombre: 'Tierra del Fuego', id_pais: 1 },
+  { nombre: 'Tucumán', id_pais: 1 },
 ];
 
-const Localidades = [
-  {
-    nombre: 'La Plata',
-    id_provincia: 1,
-  },
-  {
-    nombre: 'CABA',
-    id_provincia: 1,
-  },
-  {
-    nombre: 'Córdoba Capital',
-    id_provincia: 2,
-  },
-];
+// const Localidades = [
+//   {
+//     nombre: 'La Plata',
+//     id_provincia: 1,
+//   },
+//   {
+//     nombre: 'CABA',
+//     id_provincia: 1,
+//   },
+//   {
+//     nombre: 'Córdoba Capital',
+//     id_provincia: 2,
+//   },
+// ];
 
-const Direcciones = [
-  {
-    direccion: 'Calle 123',
-    departamento: 'A',
-    codigo_postal: '1900',
-    id_localidad: 1,
-  },
-  {
-    direccion: 'Calle 456',
-    departamento: 'B',
-    codigo_postal: '2000',
-    id_localidad: 2,
-  },
-];
+// const Direcciones = [
+//   {
+//     direccion: 'Calle 123',
+//     departamento: 'A',
+//     codigo_postal: '1900',
+//     id_localidad: 1,
+//   },
+//   {
+//     direccion: 'Calle 456',
+//     departamento: 'B',
+//     codigo_postal: '2000',
+//     id_localidad: 2,
+//   },
+// ];
 
 const Estado_Pedidos = [
   {
@@ -169,125 +501,123 @@ const Estado_Pedidos = [
   },
 ];
 
-const Users = [
-  {
-    id_user: 1,
-    email: 'cmendoza@cliente.com',
-    password: password,
-    role: 'cliente',
-    recovery_token: null,
-  },
-  {
-    id_user: 2,
-    email: 'juanlopez@gmail.com',
-    password: password,
-    role: 'cliente',
-    recovery_token: null,
-  },
-  {
-    id_user: 3,
-    email: 'valekloster18@gmail.com',
-    password: password,
-    role: 'admin',
-    recovery_token: null,
-  },
-];
+// const Users = [
+//   {
+//     id_user: 1,
+//     email: 'cmendoza@cliente.com',
+//     password: password,
+//     role: 'cliente',
+//     recovery_token: null,
+//   },
+//   {
+//     id_user: 2,
+//     email: 'juanlopez@gmail.com',
+//     password: password,
+//     role: 'cliente',
+//     recovery_token: null,
+//   },
+//   {
+//     id_user: 3,
+//     email: 'valekloster18@gmail.com',
+//     password: password,
+//     role: 'admin',
+//     recovery_token: null,
+//   },
+// ];
 
-const Clientes = [
-  {
-    id_cliente: 1,
-    nombre: 'Carlos',
-    apellido: 'Mendoza',
-    id_user: 1,
-  },
-  {
-    id_cliente: 2,
-    nombre: 'Juan',
-    apellido: 'Lopez',
-    id_user: 2,
-  },
-];
+// const Clientes = [
+//   {
+//     id_cliente: 1,
+//     nombre: 'Carlos',
+//     apellido: 'Mendoza',
+//     id_user: 1,
+//   },
+//   {
+//     id_cliente: 2,
+//     nombre: 'Juan',
+//     apellido: 'Lopez',
+//     id_user: 2,
+//   },
+// ];
 
-const Favorito = [
-  {
-    id_cliente: 1,
-    id_producto: 1,
-  },
-  {
-    id_cliente: 1,
-    id_producto: 2,
-  },
-];
+// const Favorito = [
+//   {
+//     id_cliente: 1,
+//     id_producto: 1,
+//   },
+//   {
+//     id_cliente: 1,
+//     id_producto: 2,
+//   },
+// ];
 
-const Cliente_Direcciones = [
-  {
-    id_cliente: 1,
-    id_direccion: 1,
-  },
-  {
-    id_cliente: 2,
-    id_direccion: 2,
-  },
-];
+// const Cliente_Direcciones = [
+//   {
+//     id_cliente: 1,
+//     id_direccion: 1,
+//   },
+//   {
+//     id_cliente: 2,
+//     id_direccion: 2,
+//   },
+// ];
 
-const Carritos = [
-  {
-    fecha: new Date(),
-    monto_total: 16800,
-    id_cliente: 1,
-  },
-  {
-    fecha: new Date(),
-    monto_total: 16800,
-    id_cliente: 2,
-  },
-];
+// const Carritos = [
+//   {
+//     fecha: new Date(),
+//     monto_total: 16800,
+//     id_cliente: 1,
+//   },
+//   {
+//     fecha: new Date(),
+//     monto_total: 16800,
+//     id_cliente: 2,
+//   },
+// ];
 
-const Carrito_Detalles = [
-  {
-    id_carrito: 1,
-    id_detalle: 1,
-    cantidad: 2,
-    precio: 9800,
-  },
-  {
-    id_carrito: 1,
-    id_detalle: 2,
-    cantidad: 1,
-    precio: 7000,
-  },
-  {
-    id_carrito: 2,
-    id_detalle: 1,
-    cantidad: 3,
-    precio: 9800,
-  },
-  {
-    id_carrito: 2,
-    id_detalle: 2,
-    cantidad: 3,
-    precio: 7000,
-  },
-];
+// const Carrito_Detalles = [
+//   {
+//     id_carrito: 1,
+//     id_producto: 1,
+//     cantidad: 2,
+//     precio: 9800,
+//   },
+//   {
+//     id_carrito: 1,
+//     id_producto: 2,
+//     cantidad: 1,
+//     precio: 7000,
+//   },
+//   {
+//     id_carrito: 2,
+//     id_producto: 1,
+//     cantidad: 3,
+//     precio: 9800,
+//   },
+//   {
+//     id_carrito: 2,
+//     id_producto: 2,
+//     cantidad: 3,
+//     precio: 7000,
+//   },
+// ];
 
 async function seed() {
   try {
     console.log(sequelize.models);
     await sequelize.models.Categoria.bulkCreate(Categorias);
     await sequelize.models.Producto.bulkCreate(Productos);
-    await sequelize.models.Detalle.bulkCreate(Detalles);
-    await sequelize.models.Producto_Detalle.bulkCreate(Producto_Detalles);
-    await sequelize.models.User.bulkCreate(Users);
-    await sequelize.models.Cliente.bulkCreate(Clientes);
+    // await sequelize.models.User.bulkCreate(Users);
+    // await sequelize.models.Cliente.bulkCreate(Clientes);
     await sequelize.models.Pais.bulkCreate(Paises);
     await sequelize.models.Provincia.bulkCreate(Provincias);
-    await sequelize.models.Localidad.bulkCreate(Localidades);
-    await sequelize.models.Direccion.bulkCreate(Direcciones);
+    // await sequelize.models.Localidad.bulkCreate(Localidades);
+    // await sequelize.models.Direccion.bulkCreate(Direcciones);
     await sequelize.models.Estado_Pedido.bulkCreate(Estado_Pedidos);
-    await sequelize.models.Favoritos.bulkCreate(Favorito);
-    await sequelize.models.Cliente_Direccion.bulkCreate(Cliente_Direcciones);
-    await sequelize.models.Carrito.bulkCreate(Carritos);
-    await sequelize.models.Carrito_Detalle.bulkCreate(Carrito_Detalles);
+    // await sequelize.models.Favoritos.bulkCreate(Favorito);
+    // await sequelize.models.Cliente_Direccion.bulkCreate(Cliente_Direcciones);
+    // await sequelize.models.Carrito.bulkCreate(Carritos);
+    // await sequelize.models.Carrito_Detalle.bulkCreate(Carrito_Detalles);
     console.log('Database seeded 😁');
   } catch (error) {
     console.error(error);
