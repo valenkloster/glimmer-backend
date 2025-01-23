@@ -16,6 +16,7 @@ const config = {
   mailerPass: process.env.MAILER_PASS,
   jwtSecretRecovery: process.env.JWT_SECRET_RECOVERY,
   clientDomain: process.env.CLIENT_DOMAIN,
+  mercadoPago: process.env.MP_ACCESS_TOKEN,
 };
 
 export default config;
