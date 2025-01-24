@@ -27,14 +27,8 @@ app.use((req, res, next) => {
   next(boom.notFound('Route not found'));
 });
 
-// const server = app.listen(config.port, () => {
-//   console.log('App listening on port ' + config.port + '!');
-// });
-
-const port = process.env.PORT || config.port;
-
-const server = app.listen(port, '0.0.0.0', () => {
-  console.log('App listening on port ' + port);
+const server = app.listen(config.port, () => {
+  console.log('App listening on port ' + config.port + '!');
 });
 
 export { app, server };

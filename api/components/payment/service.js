@@ -19,7 +19,7 @@ class MercadoPagoService {
         currency_id: 'ARS',
       })),
       back_urls: {
-        success: `${config.clientDomain}/success/?payment_id={payment_id}`,
+        success: `${config.clientDomain}/success`,
         failure: `${config.clientDomain}/shop`,
       },
       auto_return: 'approved',
