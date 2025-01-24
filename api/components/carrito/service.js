@@ -14,7 +14,16 @@ class CarritoService {
   async getBagByClient(id_cliente) {
     const bag = await models.Carrito.findOne({
       where: { id_cliente },
-      include: ['detalles'],
+      include: [
+        {
+          association: 'detalles', // Relación de la localidad
+          include: [
+            {
+              association: 'producto', // Relación de la provincia de la localidad
+            },
+          ],
+        },
+      ],
     });
     if (!bag) {
       throw boom.notFound('Bag not found for this client');
