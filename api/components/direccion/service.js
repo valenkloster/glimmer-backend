@@ -6,41 +6,29 @@ class DireccionService {
   constructor() {}
 
   async create(data) {
-    // Find or create country
-    const [country] = await models.Pais.findOrCreate({
-      where: { nombre: data.localidad.provincia.pais.nombre },
-      defaults: { nombre: data.localidad.provincia.pais.nombre },
+    // Verificar que existe la provincia
+    const province = await models.Provincia.findByPk(
+      data.localidad.provincia.id_provincia,
+    );
+
+    if (!province) {
+      throw new Error('Provincia no encontrada');
+    }
+
+    // Create place
+    const place = await models.Localidad.create({
+      nombre: data.localidad.nombre,
+      id_provincia: province.id_provincia,
     });
 
-    // Find or create state
-    const [province] = await models.Provincia.findOrCreate({
-      where: {
-        nombre: data.localidad.provincia.nombre,
-        id_pais: country.id_pais,
-      },
-      defaults: {
-        nombre: data.localidad.provincia.nombre,
-        id_pais: country.id_pais,
-      },
-    });
-
-    // Find or create place
-    const [place] = await models.Localidad.findOrCreate({
-      where: {
-        nombre: data.localidad.nombre,
-        id_provincia: province.id_provincia,
-      },
-      defaults: {
-        nombre: data.localidad.nombre,
-        id_provincia: province.id_provincia,
-      },
-    });
-
-    // Address
+    // Create Address
     const newAddress = await models.Direccion.create({
-      ...data,
+      direccion: data.direccion,
+      departamento: data.departamento,
+      codigo_postal: data.codigo_postal,
       id_localidad: place.id_localidad,
     });
+
     return newAddress;
   }
 
@@ -53,11 +41,11 @@ class DireccionService {
     const address = await models.Direccion.findByPk(id, {
       include: [
         {
-          association: 'localidad', // Relación de la localidad
+          association: 'localidad',
           include: [
             {
-              association: 'provincia', // Relación de la provincia de la localidad
-              include: ['pais'], // Relación del pais dentro de la provincia
+              association: 'provincia',
+              include: ['pais'],
             },
           ],
         },

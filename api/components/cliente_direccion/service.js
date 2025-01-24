@@ -25,7 +25,22 @@ class ClienteDireccionService {
   async findByCliente(id_cliente) {
     const direcciones = await models.Cliente_Direccion.findAll({
       where: { id_cliente },
-      include: ['direccion'],
+      include: [
+        {
+          association: 'direccion',
+          include: [
+            {
+              association: 'localidad',
+              include: [
+                {
+                  association: 'provincia',
+                  include: ['pais'],
+                },
+              ],
+            },
+          ],
+        },
+      ],
     });
     return direcciones;
   }

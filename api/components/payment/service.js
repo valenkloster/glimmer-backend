@@ -1,7 +1,9 @@
-import { MercadoPagoConfig, Preference, Payment } from 'mercadopago';
+import { MercadoPagoConfig, Preference } from 'mercadopago';
 import config from '../../../config.js';
+import PedidoService from '../pedido/service.js';
+const orderService = new PedidoService();
 
-class MercadoPagoService {
+class PaymentService {
   constructor() {
     this.client = new MercadoPagoConfig({
       accessToken: config.mercadoPago,
@@ -10,7 +12,6 @@ class MercadoPagoService {
 
   async createPayment(cart) {
     const preference = new Preference(this.client);
-    const payment = new Payment(this.client);
     const preferenceData = {
       items: cart.detalles.map((item) => ({
         title: `Producto ${item.producto.nombre}`,
@@ -20,23 +21,23 @@ class MercadoPagoService {
       })),
       back_urls: {
         success: `${config.clientDomain}/success`,
-        failure: `${config.clientDomain}/shop`,
+        failure: `${config.clientDomain}/failure`,
       },
       auto_return: 'approved',
     };
-    payment
-      .capture({
-        id: '<PAYMENT_ID>',
-        transaction_amount: 12.34,
-        requestOptions: {
-          idempotencyKey: '<IDEMPOTENCY_KEY>',
-        },
-      })
-      .then(console.log)
-      .catch(console.log);
-    const result = await preference.create({ body: preferenceData });
-    return result;
+
+    return await preference.create({ body: preferenceData });
+  }
+
+  async processOrder(sub, id_direccion, status) {
+    if (status === 'approved') {
+      try {
+        await orderService.createOrder(sub, id_direccion);
+      } catch (error) {
+        return error;
+      }
+    }
   }
 }
 
-export default MercadoPagoService;
+export default PaymentService;

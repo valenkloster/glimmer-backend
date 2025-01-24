@@ -55,23 +55,4 @@ router.get(
   },
 );
 
-// router.patch(
-//   '/:id_pedido/status',
-//   passport.authenticate('jwt', { session: false }),
-//   checkRoles('admin'),
-//   async (req, res, next) => {
-//     try {
-//       const { id_pedido } = req.params;
-//       const { id_estado_pedido } = req.body;
-//       const updatedOrder = await service.updateOrderStatus(
-//         id_pedido,
-//         id_estado_pedido,
-//       );
-//       success(req, res, updatedOrder, 200);
-//     } catch (error) {
-//       next(error);
-//     }
-//   },
-// );
-
 export default router;

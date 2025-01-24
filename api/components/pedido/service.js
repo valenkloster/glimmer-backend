@@ -25,9 +25,6 @@ class PedidoService {
       if (producto.stock >= item.cantidad) {
         availableItems.push(item);
       } else {
-        // const productName = await product.getProductNameByDetail(
-        //   item.id_producto,
-        // );
         outOfStockItems.push(item.producto.nombre);
       }
     }

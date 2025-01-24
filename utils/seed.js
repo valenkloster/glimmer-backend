@@ -1,10 +1,6 @@
 import sequelize from '../libs/sequelize.js';
 import '../api/associations.js';
 
-import bcrypt from 'bcrypt';
-
-const password = bcrypt.hashSync('asdasdasd', 10);
-
 const Categorias = [
   { nombre: 'Limpieza', id_categoria_padre: null },
   { nombre: 'Limpiadores Faciales', id_categoria_padre: 1 },
@@ -456,36 +452,6 @@ const Provincias = [
   { nombre: 'Tucumán', id_pais: 1 },
 ];
 
-// const Localidades = [
-//   {
-//     nombre: 'La Plata',
-//     id_provincia: 1,
-//   },
-//   {
-//     nombre: 'CABA',
-//     id_provincia: 1,
-//   },
-//   {
-//     nombre: 'Córdoba Capital',
-//     id_provincia: 2,
-//   },
-// ];
-
-// const Direcciones = [
-//   {
-//     direccion: 'Calle 123',
-//     departamento: 'A',
-//     codigo_postal: '1900',
-//     id_localidad: 1,
-//   },
-//   {
-//     direccion: 'Calle 456',
-//     departamento: 'B',
-//     codigo_postal: '2000',
-//     id_localidad: 2,
-//   },
-// ];
-
 const Estado_Pedidos = [
   {
     descripcion: 'Cancelado',
@@ -501,123 +467,14 @@ const Estado_Pedidos = [
   },
 ];
 
-// const Users = [
-//   {
-//     id_user: 1,
-//     email: 'cmendoza@cliente.com',
-//     password: password,
-//     role: 'cliente',
-//     recovery_token: null,
-//   },
-//   {
-//     id_user: 2,
-//     email: 'juanlopez@gmail.com',
-//     password: password,
-//     role: 'cliente',
-//     recovery_token: null,
-//   },
-//   {
-//     id_user: 3,
-//     email: 'valekloster18@gmail.com',
-//     password: password,
-//     role: 'admin',
-//     recovery_token: null,
-//   },
-// ];
-
-// const Clientes = [
-//   {
-//     id_cliente: 1,
-//     nombre: 'Carlos',
-//     apellido: 'Mendoza',
-//     id_user: 1,
-//   },
-//   {
-//     id_cliente: 2,
-//     nombre: 'Juan',
-//     apellido: 'Lopez',
-//     id_user: 2,
-//   },
-// ];
-
-// const Favorito = [
-//   {
-//     id_cliente: 1,
-//     id_producto: 1,
-//   },
-//   {
-//     id_cliente: 1,
-//     id_producto: 2,
-//   },
-// ];
-
-// const Cliente_Direcciones = [
-//   {
-//     id_cliente: 1,
-//     id_direccion: 1,
-//   },
-//   {
-//     id_cliente: 2,
-//     id_direccion: 2,
-//   },
-// ];
-
-// const Carritos = [
-//   {
-//     fecha: new Date(),
-//     monto_total: 16800,
-//     id_cliente: 1,
-//   },
-//   {
-//     fecha: new Date(),
-//     monto_total: 16800,
-//     id_cliente: 2,
-//   },
-// ];
-
-// const Carrito_Detalles = [
-//   {
-//     id_carrito: 1,
-//     id_producto: 1,
-//     cantidad: 2,
-//     precio: 9800,
-//   },
-//   {
-//     id_carrito: 1,
-//     id_producto: 2,
-//     cantidad: 1,
-//     precio: 7000,
-//   },
-//   {
-//     id_carrito: 2,
-//     id_producto: 1,
-//     cantidad: 3,
-//     precio: 9800,
-//   },
-//   {
-//     id_carrito: 2,
-//     id_producto: 2,
-//     cantidad: 3,
-//     precio: 7000,
-//   },
-// ];
-
 async function seed() {
   try {
     console.log(sequelize.models);
     await sequelize.models.Categoria.bulkCreate(Categorias);
     await sequelize.models.Producto.bulkCreate(Productos);
-    // await sequelize.models.User.bulkCreate(Users);
-    // await sequelize.models.Cliente.bulkCreate(Clientes);
     await sequelize.models.Pais.bulkCreate(Paises);
     await sequelize.models.Provincia.bulkCreate(Provincias);
-    // await sequelize.models.Localidad.bulkCreate(Localidades);
-    // await sequelize.models.Direccion.bulkCreate(Direcciones);
     await sequelize.models.Estado_Pedido.bulkCreate(Estado_Pedidos);
-    // await sequelize.models.Favoritos.bulkCreate(Favorito);
-    // await sequelize.models.Cliente_Direccion.bulkCreate(Cliente_Direcciones);
-    // await sequelize.models.Carrito.bulkCreate(Carritos);
-    // await sequelize.models.Carrito_Detalle.bulkCreate(Carrito_Detalles);
     console.log('Database seeded 😁');
   } catch (error) {
     console.error(error);
