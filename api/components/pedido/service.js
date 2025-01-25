@@ -98,7 +98,15 @@ class PedidoService {
           association: 'detalles',
           include: ['producto'],
         },
-        { association: 'cliente_direccion' },
+        {
+          association: 'cliente_direccion',
+          include: [
+            {
+              association: 'localidad',
+              include: [{ association: 'provincia', include: ['pais'] }],
+            },
+          ],
+        },
         { association: 'estado' },
       ],
     });
