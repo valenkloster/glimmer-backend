@@ -113,6 +113,7 @@ class ProductService {
         [Op.or]: [
           { nombre: { [Op.iLike]: `%${query}%` } },
           { descripcion: { [Op.iLike]: `%${query}%` } },
+          { marca: { [Op.iLike]: `%${query}%` } },
         ],
       },
     });

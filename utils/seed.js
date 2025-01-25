@@ -146,7 +146,7 @@ const Productos = [
     nombre: 'Crema Hidratante con Polipéptidos',
     marca: 'Drunk Elephant',
     descripcion:
-      'El humectante diario Natural Moisturizing Factors + HA de The Ordinary es una fórmula de hidratación superficial con ácido hialurónico, triglicéridos, ceramidas y otros componentes. Esta crema liviana y no grasosa es ideal para quienes buscan una solución para los signos de deshidratación.',
+      'El humectante reafirmante con polipéptidos Protini de Drunk Elephant combina péptidos señal, factores de crecimiento, aminoácidos de apoyo y nenúfar pigmeo para una mejora inmediata en la apariencia del tono, la textura y la firmeza de la piel.',
     imagen: 'https://media.ulta.com/i/ulta/2588434?w=1080&h=1080&fmt=auto',
     tamanio: '1,6 oz',
     stock: 150,

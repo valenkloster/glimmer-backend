@@ -78,17 +78,10 @@ const ProductoSchema = {
 
 class Producto extends Model {
   static associate(models) {
-    this.belongsTo(models.Categoria, { foreignKey: 'id_categoria' });
-    // this.hasMany(models.Producto_Detalle, {
-    //   as: 'detalles',
-    //   foreignKey: 'id_producto',
-    // });
-    // this.belongsToMany(models.Detalle, {
-    //   through: models.Producto_Detalle,
-    //   as: 'detalles_completos',
-    //   foreignKey: 'id_producto',
-    //   otherKey: 'id_detalle',
-    // });
+    this.belongsTo(models.Categoria, {
+      as: 'categoria',
+      foreignKey: 'id_categoria',
+    });
     this.hasMany(models.Favoritos, {
       as: 'favoritos',
       foreignKey: 'id_producto',
