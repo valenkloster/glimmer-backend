@@ -457,7 +457,7 @@ const Estado_Pedidos = [
     descripcion: 'Cancelado',
   },
   {
-    descripcion: 'Procesando',
+    descripcion: 'Procesado',
   },
   {
     descripcion: 'Enviado',

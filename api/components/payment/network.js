@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import express from 'express';
 import { success } from '../../../network/response.js';
 import passport from 'passport';

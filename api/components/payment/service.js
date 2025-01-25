@@ -32,7 +32,8 @@ class PaymentService {
   async processOrder(sub, id_direccion, status) {
     if (status === 'approved') {
       try {
-        await orderService.createOrder(sub, id_direccion);
+        const order = await orderService.createOrder(sub, id_direccion);
+        return order;
       } catch (error) {
         return error;
       }
