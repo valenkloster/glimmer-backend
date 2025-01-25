@@ -892,7 +892,7 @@ const buildMail = (recoveryUrl) => {
                                                                           <table cellpadding="0" cellspacing="0" width="100%">
                                                                               <tbody>
                                                                                   <tr>
-                                                                                      <td align="center" class="esd-block-image es-p10b" style="font-size: 0px;"><a target="_blank" href><img src="https://i.imgur.com/aWpwUnj.png" alt="Logo" style="display: block; font-size: 12px;" width="200" title="Logo"></a></td>
+                                                                                      <td align="center" class="esd-block-image es-p10b" style="font-size: 0px;"><a target="_blank" href><img src=https://i.imgur.com/tTTvwkS.png"" alt="Logo" style="display: block; font-size: 12px;" width="200" title="Logo"></a></td>
                                                                                   </tr>
                                                                               </tbody>
                                                                           </table>
