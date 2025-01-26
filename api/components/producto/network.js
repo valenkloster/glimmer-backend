@@ -2,6 +2,7 @@ import express from 'express';
 import { success } from '../../../network/response.js';
 import passport from 'passport';
 import { checkRoles } from '../../../middleware/auth.handler.js';
+import boom from '@hapi/boom';
 
 import ProductService from './service.js';
 const service = new ProductService();
@@ -55,6 +56,20 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.get(
+  '/low-stock',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin'),
+  async (req, res, next) => {
+    try {
+      const products = await service.getStock();
+      success(req, res, products, 200);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
 router.get('/:id', async (req, res, next) => {
   try {
     const product = await service.getById(req.params.id);
@@ -74,45 +89,6 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-// router.patch(
-//   '/:id',
-//   passport.authenticate('jwt', { session: false }),
-//   checkRoles('admin'),
-//   async (req, res, next) => {
-//     try {
-//       await service.update(req.params.id, req.body);
-//       success(req, res, 'Product updated', 200);
-//     } catch (error) {
-//       next(error);
-//     }
-//   },
-// );
-
-// router.patch(
-//   '/:id/stock',
-//   passport.authenticate('jwt', { session: false }),
-//   checkRoles('admin'),
-//   async (req, res, next) => {
-//     try {
-//       const { tamanio, tono_color, stock } = req.query;
-//       if (!tamanio || !tono_color || !stock) {
-//         return res.status(400).json({
-//           error: true,
-//           message: 'Required parameters: size, color tone, and stock.',
-//         });
-//       }
-//       const updatedStock = await service.updateStock(req.params.id, {
-//         tamanio,
-//         tono_color,
-//         stock,
-//       });
-//       success(req, res, updatedStock, 200);
-//     } catch (error) {
-//       next(error);
-//     }
-//   },
-// );
-
 router.delete(
   '/:id',
   passport.authenticate('jwt', { session: false }),
@@ -121,6 +97,26 @@ router.delete(
     try {
       await service.delete(req.params.id);
       success(req, res, 'Product deleted', 200);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+router.patch(
+  '/:id/stock',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin'),
+  async (req, res, next) => {
+    try {
+      const { stock } = req.body;
+      if (!stock) {
+        throw boom.badRequest('Stock is required');
+      }
+      const updatedProduct = await service.updateStock(req.params.id, {
+        stock,
+      });
+      success(req, res, updatedProduct, 200);
     } catch (error) {
       next(error);
     }

@@ -6,31 +6,6 @@ const { models } = sequelize;
 class ProductService {
   constructor() {}
 
-  // async createWithDetails(data) {
-  //   const { detalles } = data;
-  //   if (!data.codigo) {
-  //     data.codigo = `PROD-${Date.now()}`;
-  //   }
-  //   const product = await models.Producto.create(data);
-  //   for (const detalle of detalles) {
-  //     const { tono_nombre, tono_color, tamanio, stock, precio } = detalle;
-
-  //     // Crear detalle con valores opcionales de tono
-  //     const newDetalle = await models.Detalle.create({
-  //       tono_nombre: tono_nombre || null, // Si es null, se guarda como null
-  //       tono_color: tono_color || null, // Si es null, se guarda como null
-  //       tamanio,
-  //       stock,
-  //       precio,
-  //     });
-
-  //     await models.Producto_Detalle.create({
-  //       id_producto: product.id_producto,
-  //       id_detalle: newDetalle.id_detalle,
-  //     });
-  //   }
-  //   return product;
-  // }
   async create(data) {
     if (!data.codigo) {
       data.codigo = `PROD-${Date.now()}`;
@@ -123,6 +98,37 @@ class ProductService {
   async delete(id) {
     const product = await this.getById(id);
     await product.destroy();
+  }
+
+  async getStock() {
+    const products = await models.Producto.findAll({
+      // where: {
+      //   stock: {
+      //     [Op.lt]: 25,
+      //   },
+      // },
+      attributes: [
+        'id_producto',
+        'codigo',
+        'nombre',
+        'marca',
+        'imagen',
+        'stock',
+      ],
+      order: [['stock', 'ASC']],
+    });
+    return products;
+  }
+
+  async updateStock(id, { stock }) {
+    const product = await this.getById(id);
+    if (!product) {
+      throw boom.notFound('Product not found');
+    }
+    const updatedProduct = await product.update({
+      stock: Number(product.stock) + Number(stock),
+    });
+    return updatedProduct;
   }
 }
 
