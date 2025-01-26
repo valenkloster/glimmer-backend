@@ -1,6 +1,7 @@
 import sequelize from '../../../libs/sequelize.js';
 const { models } = sequelize;
 import boom from '@hapi/boom';
+import { Op } from 'sequelize';
 
 class PedidoService {
   constructor() {}
@@ -123,6 +124,24 @@ class PedidoService {
       totalPrice += parseFloat(detail.precio);
     });
     return totalPrice;
+  }
+
+  async getMonthStats(month, year) {
+    const startDate = new Date(`${year}-${month}-01T00:00:00.000Z`);
+    const endDate = new Date(startDate);
+    endDate.setMonth(startDate.getMonth() + 1);
+    endDate.setSeconds(endDate.getSeconds() - 1);
+    const orders = await models.Pedido.findAll({
+      where: {
+        fecha: {
+          [Op.between]: [startDate, endDate],
+        },
+      },
+      attributes: ['id_pedido', 'fecha', 'monto_total'],
+      order: [['fecha', 'ASC']],
+    });
+
+    return orders;
   }
 }
 
