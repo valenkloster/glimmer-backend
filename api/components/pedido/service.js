@@ -143,6 +143,54 @@ class PedidoService {
 
     return orders;
   }
+
+  async getTopProducts(month, year) {
+    const startDate = new Date(`${year}-${month}-01T00:00:00.000Z`);
+    const endDate = new Date(startDate);
+    endDate.setMonth(startDate.getMonth() + 1);
+    endDate.setSeconds(endDate.getSeconds() - 1);
+
+    const topProducts = await models.Pedido_Detalle.findAll({
+      attributes: [
+        'id_producto',
+        [sequelize.fn('SUM', sequelize.col('cantidad')), 'total_vendido'],
+      ],
+      include: [
+        {
+          model: models.Pedido,
+          as: 'pedido',
+          attributes: [],
+          where: {
+            fecha: {
+              [Op.between]: [startDate, endDate],
+            },
+          },
+        },
+        {
+          model: models.Producto,
+          as: 'producto',
+          attributes: ['nombre', 'marca', 'imagen'],
+        },
+      ],
+      group: [
+        'Pedido_Detalle.id_producto', // Referenciamos explícitamente la tabla
+        'producto.id_producto',
+        'producto.nombre',
+        'producto.marca',
+        'producto.imagen',
+      ],
+      order: [[sequelize.literal('total_vendido'), 'DESC']],
+      limit: 5,
+    });
+
+    return topProducts.map((product) => ({
+      productId: product.id_producto,
+      name: product.producto.nombre,
+      brand: product.producto.marca,
+      image: product.producto.imagen,
+      totalSold: product.get('total_vendido'),
+    }));
+  }
 }
 
 export default PedidoService;

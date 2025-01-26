@@ -60,6 +60,22 @@ router.get(
 );
 
 router.get(
+  '/top-products',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res, next) => {
+    try {
+      const { month, year } = req.query;
+      if (!month) throw boom.badRequest('Month parameter is required');
+      if (!year) throw boom.badRequest('Year parameter is required');
+      const stats = await service.getTopProducts(month, year);
+      success(req, res, stats, 200);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+router.get(
   '/:id_pedido',
   passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
