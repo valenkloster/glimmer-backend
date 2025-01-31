@@ -27,7 +27,7 @@ describe('GET /clientes', () => {
   });
 });
 
-describe('GET /cliente/:id', () => {
+describe('GET /clientes/:id', () => {
   it('should return a single cliente by Id', async () => {
     const response = await api.get('/api/v1/clientes/2');
     expect(response.status).toBe(200);
@@ -42,7 +42,7 @@ describe('POST /clientes/sign-up', () => {
       nombre: 'Julia',
       apellido: 'Rodriguez',
       user: {
-        email: 'redriguezjulia@gmail.com',
+        email: 'rodriguezjulia@gmail.com',
         password: 'password123',
       },
     };

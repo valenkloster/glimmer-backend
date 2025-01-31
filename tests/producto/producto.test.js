@@ -19,7 +19,7 @@ beforeAll(async () => {
   }
 
   for (const producto of initialProducts) {
-    await Producto.createWithDetails(producto);
+    await Producto.create(producto);
   }
 });
 
@@ -36,7 +36,7 @@ describe('GET /productos', () => {
   });
 });
 
-describe('GET /producto/:id', () => {
+describe('GET /productos/:id', () => {
   it('should return a single producto by Id', async () => {
     const response = await api.get('/api/v1/productos/2');
     expect(response.status).toBe(200);
@@ -47,21 +47,16 @@ describe('GET /producto/:id', () => {
 describe('POST /productos', () => {
   it('should create a new product', async () => {
     const newProducto = {
-      codigo: '12347',
-      nombre: 'Labial Hidratante',
-      marca: 'Loreal',
-      descripcion: 'Labial hidratante.',
-      imagen: 'labial_mate.jpg',
+      codigo: '2606222',
+      nombre: 'Limpiador Facial Espumoso con Glucósidos',
+      marca: 'The Ordinary',
+      descripcion:
+        'Limpiador espumoso suave que limpia la piel de manera eficaz.',
+      imagen: 'https://media.ulta.com/i/ulta/2606220?w=1080&h=1080&fmt=auto',
+      tamanio: '5,0 oz',
+      stock: 150,
+      precio: 15000,
       id_categoria: 1,
-      detalles: [
-        {
-          tono_nombre: 'Rojo',
-          tono_color: '#DC9E88',
-          tamanio: '1.0 oz',
-          stock: 50,
-          precio: 100,
-        },
-      ],
     };
     const response = await api.post('/api/v1/productos').send(newProducto);
     expect(response.status).toBe(201);

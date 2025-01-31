@@ -1,42 +1,27 @@
 const initialProducts = [
   {
-    codigo: '12345',
-    nombre: 'Labial Hidratante',
-    marca: 'Maybeline',
-    descripcion: 'Labial mate de larga duración.',
-    imagen: 'labial_mate.jpg',
+    codigo: '2606220',
+    nombre: 'Limpiador Facial Espumoso con Glucósidos',
+    marca: 'The Ordinary',
+    descripcion:
+      'El limpiador facial espumoso con glucósido de The Ordinary es un limpiador espumoso suave que limpia la piel de manera eficaz al tiempo que mantiene la barrera de humedad de la piel.',
+    imagen: 'https://media.ulta.com/i/ulta/2606220?w=1080&h=1080&fmt=auto',
+    tamanio: '5,0 oz',
+    stock: 150,
+    precio: 15000,
     id_categoria: 1,
-    detalles: [
-      {
-        tono_nombre: 'Rojo',
-        tono_color: '#DC9E88',
-        tamanio: '1.0 oz',
-        stock: 50,
-        precio: 100,
-      },
-      {
-        tono_nombre: 'Nude',
-        tono_color: '#DC9E89',
-        tamanio: '1.0 oz',
-        stock: 70,
-        precio: 14.5,
-      },
-    ],
   },
   {
-    codigo: '12346',
-    nombre: 'Crema Facial',
-    marca: 'SkinGlow',
-    descripcion: 'Crema hidratante para todo tipo de piel.',
-    imagen: 'crema_facial.jpg',
+    codigo: '2551159',
+    nombre: 'Limpiador de Escualano para Pieles Secas',
+    marca: 'The Ordinary',
+    descripcion:
+      'El limpiador Squalane para piel seca de The Ordinary es un producto de limpieza suave formulado para eliminar el maquillaje y dejar la piel suave e hidratada.',
+    imagen: 'https://media.ulta.com/i/ulta/2551159?w=1080&h=1080&fmt=auto',
+    tamanio: '5,0 oz',
+    stock: 150,
+    precio: 12500,
     id_categoria: 2,
-    detalles: [
-      {
-        tamanio: '1.0 oz',
-        stock: 100,
-        precio: 20,
-      },
-    ],
   },
 ];
 
@@ -48,25 +33,6 @@ const initialCategories = [
   {
     id_categoria: 2,
     nombre: 'Cremas Faciales',
-  },
-];
-
-const initialDetails = [
-  {
-    id_producto_detalle: 1,
-    id_producto: 1,
-    tono_nombre: 'Nude',
-    tono_color: '#F1C7A9',
-    tamanio: '1.0 oz',
-    stock: 150,
-  },
-  {
-    id_producto_detalle: 2,
-    id_producto: 1,
-    tono_nombre: 'Rosa',
-    tono_color: '#M1F7A8',
-    tamanio: '1.0 oz',
-    stock: 200,
   },
 ];
 
@@ -95,10 +61,4 @@ async function databaseDestroy(sequelize) {
   await sequelize.sync({ force: true });
 }
 
-export {
-  initialProducts,
-  initialCategories,
-  initialDetails,
-  initialClientes,
-  databaseDestroy,
-};
+export { initialProducts, initialCategories, initialClientes, databaseDestroy };
