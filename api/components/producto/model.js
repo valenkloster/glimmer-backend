@@ -47,7 +47,19 @@ const ProductoSchema = {
     allowNull: false,
   },
   tamanio: {
-    type: DataTypes.STRING(50),
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  altura: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  ancho: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  largo: {
+    type: DataTypes.INTEGER,
     allowNull: true,
   },
   stock: {

@@ -17,6 +17,8 @@ const config = {
   jwtSecretRecovery: process.env.JWT_SECRET_RECOVERY,
   clientDomain: process.env.CLIENT_DOMAIN,
   mercadoPago: process.env.MP_ACCESS_TOKEN,
+  zippinApiKey: process.env.ZIPPIN_API_KEY,
+  zippinApiSecret: process.env.ZIPPIN_API_SECRET,
 };
 
 export default config;
