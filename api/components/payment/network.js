@@ -14,8 +14,9 @@ router.post(
   async (req, res, next) => {
     try {
       const { sub } = req.user;
+      const { shippingCost } = req.body;
       const cart = await cartService.getBagByClient(sub);
-      const preference = await paymentService.createPayment(cart);
+      const preference = await paymentService.createPayment(cart, shippingCost);
       success(req, res, preference, 201);
     } catch (error) {
       next(error);
@@ -29,8 +30,14 @@ router.post(
   async (req, res, next) => {
     try {
       const { sub } = req.user;
-      const { status, id_direccion } = req.body;
-      await paymentService.processOrder(sub, id_direccion, status);
+      const { status, id_direccion, shippingCost, productsTotal } = req.body;
+      await paymentService.processOrder(
+        sub,
+        id_direccion,
+        status,
+        shippingCost,
+        productsTotal,
+      );
       success(req, res, 'Order created', 201);
     } catch (error) {
       next(error);

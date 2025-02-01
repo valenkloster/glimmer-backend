@@ -6,7 +6,7 @@ import { Op } from 'sequelize';
 class PedidoService {
   constructor() {}
 
-  async createOrder(id_cliente, id_direccion) {
+  async createOrder(id_cliente, id_direccion, shippingCost, productsTotal) {
     const bag = await models.Carrito.findOne({ where: { id_cliente } });
     if (!bag) throw boom.notFound('Bag not found');
 
@@ -37,7 +37,9 @@ class PedidoService {
     const newOrder = await models.Pedido.create({
       id_cliente,
       id_direccion,
-      monto_total: 0,
+      monto_productos: productsTotal,
+      monto_envio: shippingCost,
+      monto_total: productsTotal + shippingCost,
       id_estado_pedido: 2,
     });
 
@@ -55,17 +57,13 @@ class PedidoService {
       await producto.save();
     }
 
-    newOrder.monto_total = await this.calculateTotalOrderPrice(
-      newOrder.id_pedido,
-    );
-    await newOrder.save();
-
     await models.Carrito_Detalle.destroy({
       where: { id_carrito: bag.id_carrito },
     });
 
     bag.monto_total = 0;
     await bag.save();
+
     return {
       message:
         outOfStockItems.length > 0

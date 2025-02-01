@@ -18,6 +18,14 @@ const PedidoSchema = {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
+  monto_productos: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,
+  },
+  monto_envio: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,
+  },
   id_cliente: {
     type: DataTypes.STRING,
     allowNull: false,
