@@ -45,24 +45,6 @@ class ShippingService {
       throw new Error(`Error getting shipping costs: ${error.message}`);
     }
   }
-
-  // async createShipment(data) {
-  //   try {
-  //     const response = await this.api.post('shipments', data);
-  //     return response.data;
-  //   } catch (error) {
-  //     throw new Error(`Error getting shipping costs: ${error.message}`);
-  //   }
-  // }
-
-  // async getShipment(shipment_id) {
-  //   try {
-  //     const response = await this.api.get(`shipments/${shipment_id}`);
-  //     return response.data;
-  //   } catch (error) {
-  //     throw new Error(`Error getting shipping costs: ${error.message}`);
-  //   }
-  // }
 }
 
 export default ShippingService;

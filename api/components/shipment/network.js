@@ -15,22 +15,4 @@ router.post('/rate', async (req, res, next) => {
   }
 });
 
-// router.post('/create', async (req, res, next) => {
-//   try {
-//     const shipment = await shippingService.createShipment(req.body);
-//     success(req, res, shipment, 201);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
-// router.get('/:shipment_id', async (req, res, next) => {
-//   try {
-//     const shipment = await shippingService.getShipment(req.params.shipment_id);
-//     success(req, res, shipment, 200);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
 export default router;
