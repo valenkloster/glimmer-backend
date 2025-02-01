@@ -15,6 +15,7 @@ import carrito from '../api/components/carrito/network.js';
 import pedido from '../api/components/pedido/network.js';
 import resenia from '../api/components/resenia/network.js';
 import payment from '../api/components/payment/network.js';
+import shipment from '../api/components/shipment/network.js';
 
 function routerApi(app) {
   const router = express.Router();
@@ -35,6 +36,7 @@ function routerApi(app) {
   router.use('/pedidos', pedido);
   router.use('/resenias', resenia);
   router.use('/pagos', payment);
+  router.use('/envios', shipment);
 }
 
 export default routerApi;
