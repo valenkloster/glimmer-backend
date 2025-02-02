@@ -74,6 +74,52 @@ class PedidoService {
     };
   }
 
+  async getAllOrders(filters = {}) {
+    const { estado, searchTerm } = filters;
+
+    const whereClause = {};
+
+    if (estado) {
+      whereClause.id_estado_pedido = estado;
+    }
+
+    if (searchTerm) {
+      // Dividimos el término de búsqueda en palabras
+      const searchTerms = searchTerm.split(' ').filter((term) => term !== '');
+
+      // Si hay términos de búsqueda, creamos las condiciones
+      if (searchTerms.length > 0) {
+        whereClause[Op.or] = [
+          // Búsqueda por ID si el término es un número
+          ...(isNaN(searchTerm) ? [] : [{ id_pedido: parseInt(searchTerm) }]),
+
+          // Búsqueda por cada término en nombre o apellido
+          ...searchTerms.map((term) => ({
+            [Op.or]: [
+              { '$cliente.nombre$': { [Op.iLike]: `%${term}%` } },
+              { '$cliente.apellido$': { [Op.iLike]: `%${term}%` } },
+            ],
+          })),
+        ];
+      }
+    }
+
+    const orders = await models.Pedido.findAll({
+      where: whereClause,
+      include: [
+        {
+          association: 'detalles',
+          include: ['producto'],
+        },
+        { association: 'cliente' },
+        { association: 'cliente_direccion' },
+        { association: 'estado' },
+      ],
+      order: [['fecha', 'DESC']],
+    });
+    return orders;
+  }
+
   async getOrders(id_cliente) {
     const orders = await models.Pedido.findAll({
       where: { id_cliente },
@@ -188,6 +234,14 @@ class PedidoService {
       image: product.producto.imagen,
       totalSold: product.get('total_vendido'),
     }));
+  }
+
+  async updateOrderStatus(id_pedido, id_estado_pedido) {
+    const order = await models.Pedido.findByPk(id_pedido);
+    if (!order) throw boom.notFound('Order not found');
+
+    await order.update({ id_estado_pedido });
+    return order;
   }
 }
 

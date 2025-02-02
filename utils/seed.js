@@ -227,7 +227,7 @@ const Productos = [
     altura: 11,
     ancho: 5,
     largo: 7,
-    stock: 150,
+    stock: 13,
     precio: 90500,
     id_categoria: 7,
   },
@@ -282,12 +282,12 @@ const Productos = [
     marca: 'Bio-Oil',
     descripcion:
       'El aceite para el cuidado de la piel Bio-Oil reduce la apariencia de estrías, cicatrices y otras marcas debidas a cirugías, lesiones, acné, envejecimiento, embarazo y más.',
-    imagen: 'https://media.ulta.com/i/ulta/2551162?w=1080&h=1080&fmt=auto',
+    imagen: 'https://media.ulta.com/i/ulta/2255970?w=1080&h=1080&fmt=auto',
     tamanio: 190,
     altura: 16,
     ancho: 6,
     largo: 6,
-    stock: 150,
+    stock: 20,
     precio: 42000,
     id_categoria: 8,
   },
@@ -362,7 +362,7 @@ const Productos = [
     altura: 5,
     ancho: 3,
     largo: 4,
-    stock: 150,
+    stock: 20,
     precio: 96000,
     id_categoria: 11,
   },
@@ -377,7 +377,7 @@ const Productos = [
     altura: 4,
     ancho: 3,
     largo: 4,
-    stock: 150,
+    stock: 10,
     precio: 32500,
     id_categoria: 11,
   },
@@ -452,7 +452,7 @@ const Productos = [
     altura: 5,
     ancho: 3,
     largo: 4,
-    stock: 150,
+    stock: 20,
     precio: 25200,
     id_categoria: 15,
   },
@@ -553,16 +553,13 @@ const Provincias = [
 
 const Estado_Pedidos = [
   {
-    descripcion: 'Cancelado',
+    descripcion: 'Entregado',
   },
   {
     descripcion: 'Procesado',
   },
   {
     descripcion: 'Enviado',
-  },
-  {
-    descripcion: 'Entregado',
   },
 ];
 

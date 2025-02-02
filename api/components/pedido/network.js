@@ -30,6 +30,24 @@ router.post(
 );
 
 router.get(
+  '/all',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res, next) => {
+    try {
+      const { estado, searchTerm } = req.query;
+      const filters = {
+        estado: estado || '',
+        searchTerm: searchTerm || '',
+      };
+      const orders = await service.getAllOrders(filters);
+      success(req, res, orders, 200);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
@@ -81,6 +99,24 @@ router.get(
   async (req, res, next) => {
     try {
       const order = await service.getOrderById(req.params.id_pedido);
+      success(req, res, order, 200);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+router.patch(
+  '/:id_pedido/status',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res, next) => {
+    try {
+      const { id_pedido } = req.params;
+      const { id_estado_pedido } = req.body;
+      const order = await service.updateOrderStatus(
+        id_pedido,
+        id_estado_pedido,
+      );
       success(req, res, order, 200);
     } catch (error) {
       next(error);
