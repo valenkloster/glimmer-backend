@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: config.clientDomain,
+    origin: config.clientDomain.split(','),
   }),
 );
 
