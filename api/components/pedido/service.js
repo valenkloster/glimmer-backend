@@ -4,6 +4,8 @@ import boom from '@hapi/boom';
 import { Op } from 'sequelize';
 import EmailService from '../../../utils/EmailService/index.js';
 import buildMail from '../../../utils/emails/orderConfirmation.js';
+import buildOnWayMail from '../../../utils/emails/orderOnTheWay.js';
+import buildOrderDeliveredMail from '../../../utils/emails/orderDelivered.js';
 import config from '../../../config.js';
 
 import UserService from '../user/service.js';
@@ -23,6 +25,38 @@ class PedidoService {
       to: `${user.email}`,
       subject: '¡Gracias por tu compra!',
       html: welcomeEmail,
+    };
+    const rta = await EmailService.sendEmail(mail);
+    return rta;
+  }
+
+  async sendOrderOnWay(id_user) {
+    const user = await service.getById(id_user);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const welcomeEmail = buildOnWayMail();
+    const mail = {
+      from: config.mailerAddress,
+      to: `${user.email}`,
+      subject: '¡Tu pedido está en camino!',
+      html: welcomeEmail,
+    };
+    const rta = await EmailService.sendEmail(mail);
+    return rta;
+  }
+
+  async sendOrderDelivered(id_user) {
+    const user = await service.getById(id_user);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const deliveredEmail = buildOrderDeliveredMail();
+    const mail = {
+      from: config.mailerAddress,
+      to: `${user.email}`,
+      subject: '¡Tu pedido ha sido entregado!',
+      html: deliveredEmail,
     };
     const rta = await EmailService.sendEmail(mail);
     return rta;
@@ -266,6 +300,13 @@ class PedidoService {
     if (!order) throw boom.notFound('Order not found');
 
     await order.update({ id_estado_pedido });
+
+    if (id_estado_pedido === 3) {
+      await this.sendOrderOnWay(order.id_cliente);
+    } else if (id_estado_pedido === 1) {
+      await this.sendOrderDelivered(order.id_cliente);
+    }
+
     return order;
   }
 }
