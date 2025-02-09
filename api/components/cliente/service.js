@@ -5,12 +5,31 @@ import bcrypt from 'bcrypt';
 import UserService from '../user/service.js';
 const service = new UserService();
 import { v4 as uuidv4 } from 'uuid';
+import EmailService from '../../../utils/EmailService/index.js';
+import buildWelcomeMail from '../../../utils/emails/bienvenida.js';
+import config from '../../../config.js';
 
 import CarritoService from '../carrito/service.js';
 const carritoService = new CarritoService();
 
 class CustomerService {
   constructor() {}
+
+  async sendWelcome(email) {
+    const user = await service.getByEmail(email);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const welcomeEmail = buildWelcomeMail();
+    const mail = {
+      from: config.mailerAddress,
+      to: `${user.email}`,
+      subject: '¡Bienvenido a GLIMMER! 💫',
+      html: welcomeEmail,
+    };
+    const rta = await EmailService.sendEmail(mail);
+    return rta;
+  }
 
   async create(data) {
     let user = await service.getByEmail(data.user.email);
@@ -39,6 +58,7 @@ class CustomerService {
     });
     delete newCustomer.dataValues.user.dataValues.password;
     await carritoService.createBag(newCustomer.id_cliente);
+    await this.sendWelcome(newCustomer.user.email);
     return newCustomer;
   }
 

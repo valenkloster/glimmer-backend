@@ -927,7 +927,7 @@ const buildMail = (recoveryUrl) => {
                                                                                   </tr>
                                                                                   <tr>
                                                                                       <td align="center" class="esd-block-text es-p15t es-p15b es-p40r es-p40l es-m-p0r es-m-p0l es-m-txt-c" esd-links-underline="none">
-                                                                                          <h1 style="font-size: 39px;">Cambio de contrseña</h1>
+                                                                                          <h1 style="font-size: 39px;">Cambio de contraseña</h1>
                                                                                       </td>
                                                                                   </tr>
                                                                                   <tr>
@@ -1022,7 +1022,7 @@ const buildMail = (recoveryUrl) => {
                                                                                   </tr>
                                                                                   <tr>
                                                                                       <td align="center" class="esd-block-text es-p35b">
-                                                                                          <p>Glimmer&nbsp;© 2023&nbsp;Glimmer, LLC. All Rights Reserved.<br></p>
+                                                                                          <p>Glimmer&nbsp;© 2025&nbsp;Glimmer, LLC. All Rights Reserved.<br></p>
                                                                                       </td>
                                                                                   </tr>
                                                                                   <tr>
