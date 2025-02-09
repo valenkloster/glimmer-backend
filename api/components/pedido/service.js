@@ -2,9 +2,31 @@ import sequelize from '../../../libs/sequelize.js';
 const { models } = sequelize;
 import boom from '@hapi/boom';
 import { Op } from 'sequelize';
+import EmailService from '../../../utils/EmailService/index.js';
+import buildMail from '../../../utils/emails/orderConfirmation.js';
+import config from '../../../config.js';
+
+import UserService from '../user/service.js';
+const service = new UserService();
 
 class PedidoService {
   constructor() {}
+
+  async sendOrderConfirmation(email) {
+    const user = await service.getByEmail(email);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const welcomeEmail = buildMail();
+    const mail = {
+      from: config.mailerAddress,
+      to: `${user.email}`,
+      subject: '¡Gracias por tu compra!',
+      html: welcomeEmail,
+    };
+    const rta = await EmailService.sendEmail(mail);
+    return rta;
+  }
 
   async createOrder(id_cliente, id_direccion, shippingCost, productsTotal) {
     const bag = await models.Carrito.findOne({ where: { id_cliente } });
@@ -63,6 +85,9 @@ class PedidoService {
 
     bag.monto_total = 0;
     await bag.save();
+
+    const user = await service.getById(id_cliente);
+    await this.sendOrderConfirmation(user.email);
 
     return {
       message:
