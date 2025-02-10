@@ -14,12 +14,15 @@ const service = new UserService();
 class PedidoService {
   constructor() {}
 
-  async sendOrderConfirmation(email) {
+  async sendOrderConfirmation(email, orderId) {
     const user = await service.getByEmail(email);
     if (!user) {
       throw new Error('User not found');
     }
-    const welcomeEmail = buildMail();
+
+    const order = await this.getOrderById(orderId);
+
+    const welcomeEmail = buildMail(order);
     const mail = {
       from: config.mailerAddress,
       to: `${user.email}`,
@@ -30,17 +33,18 @@ class PedidoService {
     return rta;
   }
 
-  async sendOrderOnWay(id_user) {
+  async sendOrderOnWay(id_user, orderId) {
     const user = await service.getById(id_user);
     if (!user) {
       throw new Error('User not found');
     }
-    const welcomeEmail = buildOnWayMail();
+    const order = await this.getOrderById(orderId);
+    const onWayEmail = buildOnWayMail(order);
     const mail = {
       from: config.mailerAddress,
       to: `${user.email}`,
       subject: '¡Tu pedido está en camino!',
-      html: welcomeEmail,
+      html: onWayEmail,
     };
     const rta = await EmailService.sendEmail(mail);
     return rta;
@@ -121,7 +125,7 @@ class PedidoService {
     await bag.save();
 
     const user = await service.getById(id_cliente);
-    await this.sendOrderConfirmation(user.email);
+    await this.sendOrderConfirmation(user.email, newOrder.id_pedido);
 
     return {
       message:
@@ -302,7 +306,7 @@ class PedidoService {
     await order.update({ id_estado_pedido });
 
     if (id_estado_pedido === 3) {
-      await this.sendOrderOnWay(order.id_cliente);
+      await this.sendOrderOnWay(order.id_cliente, order.id_pedido);
     } else if (id_estado_pedido === 1) {
       await this.sendOrderDelivered(order.id_cliente);
     }
