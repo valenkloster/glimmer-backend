@@ -38,8 +38,7 @@ class PedidoService {
     if (!user) {
       throw new Error('User not found');
     }
-    const order = await this.getOrderById(orderId);
-    const onWayEmail = buildOnWayMail(order);
+    const onWayEmail = buildOnWayMail(orderId);
     const mail = {
       from: config.mailerAddress,
       to: `${user.email}`,
@@ -50,12 +49,12 @@ class PedidoService {
     return rta;
   }
 
-  async sendOrderDelivered(id_user) {
+  async sendOrderDelivered(id_user, orderId) {
     const user = await service.getById(id_user);
     if (!user) {
       throw new Error('User not found');
     }
-    const deliveredEmail = buildOrderDeliveredMail();
+    const deliveredEmail = buildOrderDeliveredMail(orderId);
     const mail = {
       from: config.mailerAddress,
       to: `${user.email}`,
@@ -308,7 +307,7 @@ class PedidoService {
     if (id_estado_pedido === 3) {
       await this.sendOrderOnWay(order.id_cliente, order.id_pedido);
     } else if (id_estado_pedido === 1) {
-      await this.sendOrderDelivered(order.id_cliente);
+      await this.sendOrderDelivered(order.id_cliente, order.id_pedido);
     }
 
     return order;
