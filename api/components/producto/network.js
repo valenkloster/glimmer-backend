@@ -123,4 +123,24 @@ router.patch(
   },
 );
 
+router.patch(
+  '/:id/price',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin'),
+  async (req, res, next) => {
+    try {
+      const { precio } = req.body;
+      if (!precio) {
+        throw boom.badRequest('Price is required');
+      }
+      const updatedProduct = await service.updatePrice(req.params.id, {
+        precio,
+      });
+      success(req, res, updatedProduct, 200);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
 export default router;

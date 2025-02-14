@@ -130,6 +130,17 @@ class ProductService {
     });
     return updatedProduct;
   }
+
+  async updatePrice(id, { precio }) {
+    const product = await this.getById(id);
+    if (!product) {
+      throw boom.notFound('Product not found');
+    }
+    const updatedProduct = await product.update({
+      precio: Number(precio),
+    });
+    return updatedProduct;
+  }
 }
 
 export default ProductService;
