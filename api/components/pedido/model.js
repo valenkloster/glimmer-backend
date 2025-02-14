@@ -38,6 +38,10 @@ const PedidoSchema = {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  fecha_entrega_estimada: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
 };
 
 class Pedido extends Model {

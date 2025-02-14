@@ -30,13 +30,20 @@ router.post(
   async (req, res, next) => {
     try {
       const { sub } = req.user;
-      const { status, id_direccion, shippingCost, productsTotal } = req.body;
+      const {
+        status,
+        id_direccion,
+        shippingCost,
+        productsTotal,
+        shippingDate,
+      } = req.body;
       await paymentService.processOrder(
         sub,
         id_direccion,
         status,
         shippingCost,
         productsTotal,
+        shippingDate,
       );
       success(req, res, 'Order created', 201);
     } catch (error) {

@@ -65,7 +65,13 @@ class PedidoService {
     return rta;
   }
 
-  async createOrder(id_cliente, id_direccion, shippingCost, productsTotal) {
+  async createOrder(
+    id_cliente,
+    id_direccion,
+    shippingCost,
+    productsTotal,
+    shippingDate,
+  ) {
     const bag = await models.Carrito.findOne({ where: { id_cliente } });
     if (!bag) throw boom.notFound('Bag not found');
 
@@ -100,6 +106,7 @@ class PedidoService {
       monto_envio: shippingCost,
       monto_total: productsTotal + shippingCost,
       id_estado_pedido: 2,
+      fecha_entrega_estimada: shippingDate,
     });
 
     // Create order details and update stock
@@ -303,6 +310,13 @@ class PedidoService {
     if (!order) throw boom.notFound('Order not found');
 
     await order.update({ id_estado_pedido });
+
+    if (id_estado_pedido === 1) {
+      await order.update({
+        id_estado_pedido,
+        fecha_entrega_estimada: new Date(),
+      });
+    }
 
     if (id_estado_pedido === 3) {
       await this.sendOrderOnWay(order.id_cliente, order.id_pedido);

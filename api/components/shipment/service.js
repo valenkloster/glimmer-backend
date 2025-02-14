@@ -40,7 +40,7 @@ class ShippingService {
 
     try {
       const response = await this.api.post('shipments/quote', body);
-      return response.data.results.standard_delivery.amounts.price_incl_tax;
+      return response.data.results.standard_delivery;
     } catch (error) {
       throw new Error(`Error getting shipping costs: ${error.message}`);
     }

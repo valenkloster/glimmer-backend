@@ -10,7 +10,7 @@ class PaymentService {
     });
   }
 
-  async createPayment(cart, shippingCost) {
+  async createPayment(cart, shippingInfo) {
     const preference = new Preference(this.client);
 
     const productsTotal = cart.detalles
@@ -32,7 +32,7 @@ class PaymentService {
           })),
         {
           title: 'Costo de envío',
-          unit_price: Number(shippingCost),
+          unit_price: Number(shippingInfo.amounts.price_incl_tax),
           quantity: 1,
           currency_id: 'ARS',
         },
@@ -44,7 +44,7 @@ class PaymentService {
       auto_return: 'approved',
       // Agregamos metadata para usar después
       metadata: {
-        shipping_cost: shippingCost,
+        shipping_cost: shippingInfo.amounts.price_incl_tax,
         products_total: productsTotal,
       },
     };
@@ -52,7 +52,14 @@ class PaymentService {
     return await preference.create({ body: preferenceData });
   }
 
-  async processOrder(sub, id_direccion, status, shippingCost, productsTotal) {
+  async processOrder(
+    sub,
+    id_direccion,
+    status,
+    shippingCost,
+    productsTotal,
+    shippingDate,
+  ) {
     if (status === 'approved') {
       try {
         const order = await orderService.createOrder(
@@ -60,7 +67,7 @@ class PaymentService {
           id_direccion,
           shippingCost,
           productsTotal,
-          productsTotal + shippingCost,
+          shippingDate,
         );
         return order;
       } catch (error) {

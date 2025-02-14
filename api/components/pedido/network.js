@@ -13,7 +13,8 @@ router.post(
   async (req, res, next) => {
     try {
       const { sub } = req.user;
-      const { id_direccion } = req.body;
+      const { id_direccion, shippingCost, productsTotal, shippingDate } =
+        req.body;
 
       if (!id_direccion) {
         return res
@@ -21,7 +22,13 @@ router.post(
           .json({ message: 'Client address ID is required' });
       }
 
-      const newOrder = await service.createOrder(sub, id_direccion);
+      const newOrder = await service.createOrder(
+        sub,
+        id_direccion,
+        shippingCost,
+        productsTotal,
+        shippingDate,
+      );
       success(req, res, newOrder, 201);
     } catch (error) {
       next(error);
